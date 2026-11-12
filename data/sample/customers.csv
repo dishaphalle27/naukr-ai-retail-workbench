@@ -1,0 +1,156 @@
+customer_id,name,email,city,signup_date
+C0001,Isha Singh,isha.singh1@example.com,mumbai,2025-06-28
+C0002,Sara Mehta,sara.mehta2@example.com,Kolkata,2026-02-20
+C0003,Arjun Sharma,arjun.sharma3@example.com,Kolkata,2025-10-21
+C0004,Isha Singh,isha.singh4@example.com,Pune,2025-11-26
+C0005,Anaya Nair,anaya.nair5@example.com,Mumbai,2025-08-07
+C0006,Arjun Nair,arjun.nair6@example.com,Bangalore,2025-03-28
+C0007,Kabir Joshi,  KABIR.JOSHI7@EXAMPLE.COM,Pune,2025-12-10
+C0008,Diya Khan,diya.khan8@example.com,Kolkata,2025-08-19
+C0009,Isha Iyer,isha.iyer9@example.com,Delhi,2025-02-17
+C0010,Isha Nair,isha.nair10@example.com,Pune,2025-03-16
+C0011,Anaya Singh,anaya.singh11@example.com,Pune,2025-07-19
+C0012,Vihaan Nair,vihaan.nair12@example.com,Mumbai,2025-09-07
+C0013,Rohan Sharma,rohan.sharma13@example.com,Delhi,2026-03-12
+C0014,Isha Iyer,isha.iyer14@example.com,Pune,2026-04-21
+C0015,Aarav Joshi,aarav.joshi15@example.com,bengaluru,2025-05-05
+C0016,Anaya Iyer,anaya.iyer16@example.com,Mumbai,2026-06-28
+C0017,Arjun Mehta,arjun.mehta17@example.com,Kolkata,2026-03-30
+C0018,Sara Joshi,sara.joshi18@example.com,Mumbai,2026-07-16
+C0019,Anaya Iyer,anaya.iyer19@example.com,mumbai,2026-04-06
+C0020,Kabir Khan,kabir.khan20@example.com,Kolkata,2026-06-18
+C0021,Anaya Khan,anaya.khan21@example.com,Kolkata,2026-03-27
+C0022,Diya Das,diya.das22@example.com,Bengaluru,2025-10-06
+C0023,Meera Reddy,meera.reddy23@example.com,Pune,2025-03-24
+C0024,Rohan Iyer,rohan.iyer24@example.com,Bengaluru,2026-01-28
+C0025,Rohan Khan,rohan.khan25@example.com,Delhi,2026-03-01
+C0026,Vihaan Reddy,  VIHAAN.REDDY26@EXAMPLE.COM,Pune,2026-04-23
+C0027,Vihaan Sharma,vihaan.sharma27@example.com,Bengaluru,2026-03-07
+C0028,Vihaan Mehta,vihaan.mehta28@example.com,Delhi,2026-08-13
+C0029,Vihaan Nair,vihaan.nair29@example.com,Delhi,2025-12-27
+C0030,Kabir Singh,  KABIR.SINGH30@EXAMPLE.COM,mumbai,2026-07-06
+C0031,Arjun Mehta,arjun.mehta31@example.com,Bengaluru,2026-05-15
+C0032,Isha Das,isha.das32@example.com,Mumbai,2026-05-13
+C0033,Aarav Singh,  AARAV.SINGH33@EXAMPLE.COM,Kolkata,2026-02-19
+C0034,Rohan Nair,rohan.nair34@example.com,Bengaluru,2026-07-01
+C0035,Aarav Singh,  AARAV.SINGH35@EXAMPLE.COM,Pune,2026-08-01
+C0036,Aarav Patel,  AARAV.PATEL36@EXAMPLE.COM,Mumbai,2025-05-19
+C0037,Anaya Iyer,anaya.iyer37@example.com,Delhi,2025-09-24
+C0038,Vihaan Reddy,vihaan.reddy38@example.com,Bengaluru,2026-04-11
+C0039,Meera Reddy,meera.reddy39@example.com,Bombay,2025-10-12
+C0040,Vihaan Das,vihaan.das40@example.com,Delhi,2026-04-27
+C0041,Aarav Joshi,aarav.joshi41@example.com,Delhi,2025-12-25
+C0042,Isha Patel,isha.patel42@example.com,Delhi,2025-02-01
+C0043,Isha Khan,isha.khan43@example.com,Delhi,2025-06-06
+C0044,Isha Iyer,isha.iyer44@example.com,mumbai,2025-04-28
+C0045,Sara Khan,sara.khan45@example.com,Mumbai,2025-09-20
+C0046,Meera Iyer,meera.iyer46@example.com,Pune,2025-04-28
+C0047,Rohan Das,rohan.das47@example.com,Delhi,2026-08-16
+C0048,Aarav Das,aarav.das48@example.com,Pune,2026-01-20
+C0049,Vihaan Khan,vihaan.khan49@example.com,Delhi,2025-09-06
+C0050,Diya Das,diya.das50@example.com,Pune,2025-05-04
+C0051,Sara Sharma,  SARA.SHARMA51@EXAMPLE.COM,Kolkata,2026-06-30
+C0052,Vihaan Reddy,vihaan.reddy52@example.com,Delhi,2026-06-03
+C0053,Meera Sharma,meera.sharma53@example.com,Mumbai,2026-05-17
+C0054,Diya Singh,diya.singh54@example.com,Kolkata,2026-04-16
+C0055,Rohan Singh,rohan.singh55@example.com,Bengaluru,2026-06-19
+C0056,Kabir Mehta,kabir.mehta56@example.com,Pune,2026-05-11
+C0057,Anaya Singh,  ANAYA.SINGH57@EXAMPLE.COM,Pune,2025-10-02
+C0058,Meera Khan,meera.khan58@example.com,Delhi,2025-10-13
+C0059,Anaya Khan,  ANAYA.KHAN59@EXAMPLE.COM,Mumbai,2026-08-07
+C0060,Sara Singh,sara.singh60@example.com,Kolkata,2025-01-30
+C0061,Anaya Reddy,anaya.reddy61@example.com,Bangalore,2026-05-15
+C0062,Isha Reddy,isha.reddy62@example.com,Kolkata,2025-12-15
+C0063,Kabir Mehta,kabir.mehta63@example.com,Kolkata,2026-07-24
+C0064,Aarav Joshi,aarav.joshi64@example.com,Bengaluru,2025-03-29
+C0065,Isha Singh,  ISHA.SINGH65@EXAMPLE.COM,mumbai,2026-07-23
+C0066,Isha Nair,isha.nair66@example.com,Mumbai,2026-04-04
+C0067,Aarav Patel,  AARAV.PATEL67@EXAMPLE.COM,Kolkata,2025-08-15
+C0068,Vihaan Khan,vihaan.khan68@example.com,Kolkata,2026-08-19
+C0069,Meera Nair,  MEERA.NAIR69@EXAMPLE.COM,Pune,2026-06-28
+C0070,Meera Singh,meera.singh70@example.com,Pune,2025-12-05
+C0071,Meera Nair,meera.nair71@example.com,Kolkata,2025-11-10
+C0072,Kabir Khan,kabir.khan72@example.com,Delhi,2025-07-17
+C0073,Meera Patel,meera.patel73@example.com,Pune,2025-07-09
+C0074,Isha Khan,isha.khan74@example.com,Mumbai,2025-10-11
+C0075,Sara Joshi,  SARA.JOSHI75@EXAMPLE.COM,Pune,2025-10-17
+C0076,Diya Khan,diya.khan76@example.com,Kolkata,2025-08-21
+C0077,Meera Iyer,  MEERA.IYER77@EXAMPLE.COM,Kolkata,2025-01-15
+C0078,Arjun Iyer,arjun.iyer78@example.com,Kolkata,2025-02-16
+C0079,Aarav Joshi,aarav.joshi79@example.com,Kolkata,2025-05-10
+C0080,Anaya Patel,anaya.patel80@example.com,Delhi,2026-08-11
+C0081,Kabir Nair,  KABIR.NAIR81@EXAMPLE.COM,Bombay,2026-03-28
+C0082,Meera Iyer,meera.iyer82@example.com,Delhi,2025-09-16
+C0083,Anaya Patel,anaya.patel83@example.com,Delhi,2026-02-15
+C0084,Anaya Patel,anaya.patel84@example.com,Pune,2025-02-24
+C0085,Rohan Iyer,rohan.iyer85@example.com,Pune,2025-11-08
+C0086,Diya Khan,diya.khan86@example.com,Delhi,2026-07-26
+C0087,Vihaan Mehta,vihaan.mehta87@example.com,Pune,2025-08-20
+C0088,Arjun Singh,arjun.singh88@example.com,Bombay,2026-03-30
+C0089,Kabir Mehta,  KABIR.MEHTA89@EXAMPLE.COM,Bombay,2025-11-09
+C0090,Sara Mehta,  SARA.MEHTA90@EXAMPLE.COM,Delhi,2025-04-12
+C0091,Isha Khan,isha.khan91@example.com,Kolkata,2025-03-25
+C0092,Rohan Khan,rohan.khan92@example.com,Bengaluru,2026-07-20
+C0093,Diya Iyer,  DIYA.IYER93@EXAMPLE.COM,Delhi,2026-02-23
+C0094,Anaya Mehta,anaya.mehta94@example.com,Mumbai,2025-10-26
+C0095,Aarav Khan,aarav.khan95@example.com,Kolkata,2025-10-17
+C0096,Anaya Patel,anaya.patel96@example.com,Bengaluru,2025-09-28
+C0097,Sara Khan,sara.khan97@example.com,Mumbai,2025-04-28
+C0098,Arjun Khan,arjun.khan98@example.com,Bangalore,2025-09-30
+C0099,Rohan Patel,rohan.patel99@example.com,Delhi,2025-06-19
+C0100,Kabir Mehta,kabir.mehta100@example.com,Pune,2025-10-23
+C0101,Anaya Patel,anaya.patel101@example.com,Mumbai,2025-11-08
+C0102,Vihaan Das,vihaan.das102@example.com,Pune,2026-07-07
+C0103,Anaya Nair,anaya.nair103@example.com,Delhi,2025-02-10
+C0104,Vihaan Reddy,vihaan.reddy104@example.com,Pune,2025-09-14
+C0105,Aarav Patel,  AARAV.PATEL105@EXAMPLE.COM,Bengaluru,2026-08-13
+C0106,Sara Sharma,  SARA.SHARMA106@EXAMPLE.COM,Kolkata,2026-08-14
+C0107,Aarav Iyer,aarav.iyer107@example.com,Mumbai,2026-06-16
+C0108,Anaya Das,anaya.das108@example.com,bengaluru,2026-08-23
+C0109,Vihaan Nair,  VIHAAN.NAIR109@EXAMPLE.COM,Delhi,2026-04-27
+C0110,Meera Singh,meera.singh110@example.com,Kolkata,2025-11-25
+C0111,Diya Iyer,diya.iyer111@example.com,Kolkata,2026-02-26
+C0112,Anaya Das,anaya.das112@example.com,Mumbai,2026-07-18
+C0113,Aarav Nair,aarav.nair113@example.com,Delhi,2025-11-19
+C0114,Kabir Reddy,kabir.reddy114@example.com,Delhi,2026-02-18
+C0115,Arjun Sharma,  ARJUN.SHARMA115@EXAMPLE.COM,Pune,2026-04-19
+C0116,Vihaan Sharma,vihaan.sharma116@example.com,Bengaluru,2026-06-15
+C0117,Meera Mehta,  MEERA.MEHTA117@EXAMPLE.COM,Mumbai,2026-03-29
+C0118,Aarav Khan,aarav.khan118@example.com,Kolkata,2026-07-17
+C0119,Rohan Das,rohan.das119@example.com,Mumbai,2026-05-12
+C0120,Diya Sharma,diya.sharma120@example.com,Pune,2025-09-03
+C0121,Rohan Das,  ROHAN.DAS121@EXAMPLE.COM,Pune,2025-01-15
+C0122,Arjun Singh,arjun.singh122@example.com,Delhi,2025-08-19
+C0123,Diya Nair,diya.nair123@example.com,Delhi,2025-06-07
+C0124,Anaya Das,anaya.das124@example.com,Pune,2025-10-07
+C0125,Vihaan Nair,vihaan.nair125@example.com,Mumbai,2025-09-07
+C0126,Anaya Joshi,  ANAYA.JOSHI126@EXAMPLE.COM,Bangalore,2026-01-28
+C0127,Isha Mehta,  ISHA.MEHTA127@EXAMPLE.COM,Pune,2025-05-20
+C0128,Diya Das,diya.das128@example.com,Mumbai,2025-12-15
+C0129,Arjun Das,arjun.das129@example.com,Delhi,2025-10-17
+C0130,Kabir Mehta,kabir.mehta130@example.com,Pune,2026-05-17
+C0131,Rohan Nair,rohan.nair131@example.com,Pune,2026-05-11
+C0132,Meera Reddy,meera.reddy132@example.com,Pune,2026-07-11
+C0133,Vihaan Nair,vihaan.nair133@example.com,Kolkata,2025-07-13
+C0134,Isha Mehta,isha.mehta134@example.com,mumbai,2025-08-28
+C0135,Vihaan Sharma,vihaan.sharma135@example.com,Kolkata,2026-04-30
+C0136,Vihaan Singh,vihaan.singh136@example.com,Bengaluru,2026-05-23
+C0137,Aarav Iyer,aarav.iyer137@example.com,Pune,2025-12-06
+C0138,Diya Nair,diya.nair138@example.com,Delhi,2026-06-23
+C0139,Anaya Sharma,anaya.sharma139@example.com,bengaluru,2026-02-24
+C0140,Rohan Patel,rohan.patel140@example.com,mumbai,2025-09-29
+C0141,Meera Mehta,meera.mehta141@example.com,Bombay,2025-03-24
+C0142,Meera Joshi,meera.joshi142@example.com,Bombay,2025-11-21
+C0143,Anaya Joshi,  ANAYA.JOSHI143@EXAMPLE.COM,Delhi,2025-03-12
+C0144,Isha Das,isha.das144@example.com,Bangalore,2025-04-03
+C0145,Vihaan Patel,vihaan.patel145@example.com,Delhi,2026-03-31
+C0146,Rohan Das,rohan.das146@example.com,Delhi,2025-02-17
+C0147,Meera Sharma,  MEERA.SHARMA147@EXAMPLE.COM,Kolkata,2026-01-03
+C0148,Meera Singh,  MEERA.SINGH148@EXAMPLE.COM,Bengaluru,2025-09-08
+C0149,Arjun Singh,arjun.singh149@example.com,Pune,2025-07-04
+C0150,Rohan Iyer,rohan.iyer150@example.com,Delhi,2026-01-27
+C0011,Anaya Singh,anaya.singh11@example.com,Pune,2025-07-19
+C0041,Aarav Joshi,aarav.joshi41@example.com,Delhi,2025-12-25
+C0091,Isha Khan,isha.khan91@example.com,Kolkata,2025-03-25
+C0121,Rohan Das,  ROHAN.DAS121@EXAMPLE.COM,Pune,2025-01-15
+C0141,Meera Mehta,meera.mehta141@example.com,Bombay,2025-03-24

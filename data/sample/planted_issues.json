@@ -1,0 +1,38 @@
+{
+  "seed": 42,
+  "note": "Every issue we planted on purpose. Used to score the cleaner.",
+  "planted_issues": {
+    "ambiguous_date_dd_mm": 134,
+    "category_variant": 18,
+    "city_variant": 21,
+    "duplicate_customer_row": 5,
+    "duplicate_order_row": 12,
+    "duplicate_product_row": 3,
+    "email_case_or_space": 29,
+    "missing_cost": 4,
+    "missing_customer_id": 10,
+    "missing_stock": 6,
+    "name_extra_spaces": 12,
+    "negative_stock": 4,
+    "non_iso_date": 663,
+    "orphan_product_id": 5,
+    "price_as_text": 8,
+    "prompt_injection_in_cell": 1,
+    "quantity_as_word": 4,
+    "revenue_as_text": 151,
+    "sku_format_variant": 7,
+    "store_id_lowercase": 5,
+    "store_region_case_or_space": 5
+  },
+  "true_row_counts": {
+    "stores": 8,
+    "products": 40,
+    "customers": 150,
+    "orders": 1500,
+    "inventory": 320
+  },
+  "true_totals": {
+    "total_revenue_all_orders": 4602503,
+    "returned_orders": 175
+  }
+}
