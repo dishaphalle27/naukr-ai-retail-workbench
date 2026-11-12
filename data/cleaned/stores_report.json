@@ -1,0 +1,504 @@
+{
+  "dataset": {
+    "name": "stores",
+    "source_file": "stores.csv",
+    "rows": 8,
+    "columns": 4,
+    "version": "stores_clean@e53a6736e11a"
+  },
+  "profile_before": {
+    "meta": {
+      "file_name": "stores.csv",
+      "size_bytes": 347,
+      "encoding": "utf-8",
+      "encoding_fallback": false
+    },
+    "row_count": 8,
+    "column_count": 4,
+    "column_names": [
+      "store_id",
+      "store_name",
+      "city",
+      "region"
+    ],
+    "header_issues": [],
+    "duplicates": {
+      "exact_duplicate_rows": 0,
+      "extra_after_trim_and_lowercase": 0,
+      "key": {
+        "column": "store_id",
+        "repeated_key_rows": 0,
+        "conflicting_key_rows": 0
+      }
+    },
+    "columns": {
+      "store_id": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 8,
+        "unique_after_trim_lower": 8,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "text",
+        "injection_like_values": 0,
+        "sample_values": [
+          "S01",
+          "S02",
+          "S03",
+          "S04",
+          "S05"
+        ],
+        "distinct_values": [
+          "S01",
+          "S02",
+          "S03",
+          "S04",
+          "S05",
+          "S06",
+          "S07",
+          "S08"
+        ]
+      },
+      "store_name": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 8,
+        "unique_after_trim_lower": 8,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "text",
+        "injection_like_values": 0,
+        "sample_values": [
+          "Naukr Mart Delhi 1",
+          "Naukr Mart Bengaluru 2",
+          "Naukr Mart Kolkata 3",
+          "Naukr Mart Mumbai 4",
+          "Naukr Mart Delhi 5"
+        ],
+        "distinct_values": [
+          "Naukr Mart Bengaluru 2",
+          "Naukr Mart Bengaluru 6",
+          "Naukr Mart Delhi 1",
+          "Naukr Mart Delhi 5",
+          "Naukr Mart Kolkata 3",
+          "Naukr Mart Kolkata 7",
+          "Naukr Mart Mumbai 4",
+          "Naukr Mart Mumbai 8"
+        ]
+      },
+      "city": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 4,
+        "unique_after_trim_lower": 4,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "text",
+        "injection_like_values": 0,
+        "sample_values": [
+          "Delhi",
+          "Bengaluru",
+          "Kolkata",
+          "Mumbai"
+        ],
+        "distinct_values": [
+          "Bengaluru",
+          "Delhi",
+          "Kolkata",
+          "Mumbai"
+        ]
+      },
+      "region": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 8,
+        "unique_after_trim_lower": 4,
+        "values_with_edge_spaces": 2,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "text",
+        "injection_like_values": 0,
+        "sample_values": [
+          "North",
+          "south",
+          "east",
+          "West",
+          "NORTH"
+        ],
+        "distinct_values": [
+          "East",
+          "NORTH",
+          "North",
+          "South",
+          "West",
+          "east",
+          "south"
+        ],
+        "spelling_variants": [
+          [
+            "NORTH",
+            "North "
+          ],
+          [
+            "South",
+            "south"
+          ],
+          [
+            "East",
+            "east"
+          ],
+          [
+            "West",
+            "West "
+          ]
+        ]
+      }
+    }
+  },
+  "issues": [
+    {
+      "id": "ISS:stores:region:SPELLING_VARIANTS",
+      "dataset": "stores",
+      "column": "region",
+      "type": "SPELLING_VARIANTS",
+      "severity": "low",
+      "affected_count": 4,
+      "message": "Same value written in different ways (case, spaces or punctuation).",
+      "evidence": {
+        "groups": [
+          [
+            "NORTH",
+            "North "
+          ],
+          [
+            "South",
+            "south"
+          ],
+          [
+            "East",
+            "east"
+          ],
+          [
+            "West",
+            "West "
+          ]
+        ],
+        "case_or_space_only": true
+      }
+    },
+    {
+      "id": "ISS:stores:region:WHITESPACE",
+      "dataset": "stores",
+      "column": "region",
+      "type": "WHITESPACE",
+      "severity": "low",
+      "affected_count": 2,
+      "message": "Extra spaces at the edges or inside values.",
+      "evidence": {
+        "edge": 2,
+        "double": 0
+      }
+    }
+  ],
+  "cleaning_plan": [
+    {
+      "step_id": "STEP:stores:region:trim_whitespace",
+      "order": 1,
+      "phase": "whitespace",
+      "dataset": "stores",
+      "columns": [
+        "region"
+      ],
+      "action": "trim_whitespace",
+      "reason": "Remove spaces at the start and end, and collapse double spaces.",
+      "risk": "low",
+      "source": "code",
+      "status": "planned",
+      "issue_ids": [
+        "ISS:stores:region:WHITESPACE"
+      ],
+      "params": {},
+      "expected_rows_removed": {
+        "min": 0,
+        "max": 0
+      },
+      "confidence": null,
+      "review_note": null
+    },
+    {
+      "step_id": "STEP:stores:region:canonicalize_spelling_variants",
+      "order": 2,
+      "phase": "variants",
+      "dataset": "stores",
+      "columns": [
+        "region"
+      ],
+      "action": "canonicalize_spelling_variants",
+      "reason": "Different spellings of the same value are merged into the most common one (ties: Title Case, then alphabetical).",
+      "risk": "low",
+      "source": "code",
+      "status": "planned",
+      "issue_ids": [
+        "ISS:stores:region:SPELLING_VARIANTS"
+      ],
+      "params": {
+        "rule": "most_frequent_spelling"
+      },
+      "expected_rows_removed": {
+        "min": 0,
+        "max": 0
+      },
+      "confidence": null,
+      "review_note": null
+    }
+  ],
+  "change_log": [
+    {
+      "step_id": "STEP:stores:region:trim_whitespace",
+      "order": 1,
+      "action": "trim_whitespace",
+      "columns": [
+        "region"
+      ],
+      "rows_before": 8,
+      "rows_after": 8,
+      "cells_changed": 2,
+      "details": {
+        "samples": {
+          "region": [
+            {
+              "row": 1,
+              "before": "North ",
+              "after": "North"
+            },
+            {
+              "row": 4,
+              "before": "West ",
+              "after": "West"
+            }
+          ]
+        }
+      },
+      "status": "applied"
+    },
+    {
+      "step_id": "STEP:stores:region:canonicalize_spelling_variants",
+      "order": 2,
+      "action": "canonicalize_spelling_variants",
+      "columns": [
+        "region"
+      ],
+      "rows_before": 8,
+      "rows_after": 8,
+      "cells_changed": 3,
+      "details": {
+        "merged": [
+          {
+            "from": "NORTH",
+            "to": "North"
+          },
+          {
+            "from": "south",
+            "to": "South"
+          },
+          {
+            "from": "east",
+            "to": "East"
+          }
+        ],
+        "samples": {
+          "region": [
+            {
+              "row": 2,
+              "before": "south",
+              "after": "South"
+            },
+            {
+              "row": 3,
+              "before": "east",
+              "after": "East"
+            },
+            {
+              "row": 5,
+              "before": "NORTH",
+              "after": "North"
+            }
+          ]
+        }
+      },
+      "status": "applied"
+    }
+  ],
+  "profile_after": {
+    "meta": {
+      "file_name": "stores_clean.csv"
+    },
+    "row_count": 8,
+    "column_count": 4,
+    "column_names": [
+      "store_id",
+      "store_name",
+      "city",
+      "region"
+    ],
+    "header_issues": [],
+    "duplicates": {
+      "exact_duplicate_rows": 0,
+      "extra_after_trim_and_lowercase": 0,
+      "key": {
+        "column": "store_id",
+        "repeated_key_rows": 0,
+        "conflicting_key_rows": 0
+      }
+    },
+    "columns": {
+      "store_id": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 8,
+        "unique_after_trim_lower": 8,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "text",
+        "injection_like_values": 0,
+        "sample_values": [
+          "S01",
+          "S02",
+          "S03",
+          "S04",
+          "S05"
+        ],
+        "distinct_values": [
+          "S01",
+          "S02",
+          "S03",
+          "S04",
+          "S05",
+          "S06",
+          "S07",
+          "S08"
+        ]
+      },
+      "store_name": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 8,
+        "unique_after_trim_lower": 8,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "text",
+        "injection_like_values": 0,
+        "sample_values": [
+          "Naukr Mart Delhi 1",
+          "Naukr Mart Bengaluru 2",
+          "Naukr Mart Kolkata 3",
+          "Naukr Mart Mumbai 4",
+          "Naukr Mart Delhi 5"
+        ],
+        "distinct_values": [
+          "Naukr Mart Bengaluru 2",
+          "Naukr Mart Bengaluru 6",
+          "Naukr Mart Delhi 1",
+          "Naukr Mart Delhi 5",
+          "Naukr Mart Kolkata 3",
+          "Naukr Mart Kolkata 7",
+          "Naukr Mart Mumbai 4",
+          "Naukr Mart Mumbai 8"
+        ]
+      },
+      "city": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 4,
+        "unique_after_trim_lower": 4,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "text",
+        "injection_like_values": 0,
+        "sample_values": [
+          "Delhi",
+          "Bengaluru",
+          "Kolkata",
+          "Mumbai"
+        ],
+        "distinct_values": [
+          "Bengaluru",
+          "Delhi",
+          "Kolkata",
+          "Mumbai"
+        ]
+      },
+      "region": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 4,
+        "unique_after_trim_lower": 4,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "text",
+        "injection_like_values": 0,
+        "sample_values": [
+          "North",
+          "South",
+          "East",
+          "West"
+        ],
+        "distinct_values": [
+          "East",
+          "North",
+          "South",
+          "West"
+        ]
+      }
+    }
+  },
+  "issues_after": [],
+  "validation": {
+    "passed": true,
+    "checks": {
+      "schema_unchanged": true,
+      "rows_as_planned": true,
+      "rows_are_survivors": true,
+      "untouched_columns_identical": true,
+      "no_failed_steps": true,
+      "no_unexpected_issues": true,
+      "idempotent": true
+    },
+    "rows": {
+      "before": 8,
+      "after": 8,
+      "removed": 0,
+      "allowed_removed_min": 0,
+      "allowed_removed_max": 0
+    },
+    "columns": {
+      "before": 4,
+      "after": 4
+    },
+    "failed_steps": [],
+    "unexpected_issue_ids": [],
+    "left_for_review": [],
+    "second_pass_changing_steps": []
+  },
+  "artifacts": {
+    "original": "data\\sample\\stores.csv",
+    "original_sha256": "978db5a9aeb8b177d7c794454defaa6270d040a968ff3b599aa31e3f1dae0d57",
+    "cleaned": "data\\cleaned\\stores_clean.csv",
+    "cleaned_sha256": "e53a6736e11ae200bae9867695bfc8af096579787f4550b1a1bb39de03e13337"
+  }
+}

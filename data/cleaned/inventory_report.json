@@ -1,0 +1,623 @@
+{
+  "dataset": {
+    "name": "inventory",
+    "source_file": "inventory.csv",
+    "rows": 320,
+    "columns": 5,
+    "version": "inventory_clean@838f84dbf4d3"
+  },
+  "profile_before": {
+    "meta": {
+      "file_name": "inventory.csv",
+      "size_bytes": 8534,
+      "encoding": "utf-8",
+      "encoding_fallback": false
+    },
+    "row_count": 320,
+    "column_count": 5,
+    "column_names": [
+      "product_id",
+      "store_id",
+      "stock_on_hand",
+      "reorder_level",
+      "last_restock_date"
+    ],
+    "header_issues": [],
+    "duplicates": {
+      "exact_duplicate_rows": 0,
+      "extra_after_trim_and_lowercase": 0,
+      "key": null
+    },
+    "columns": {
+      "product_id": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 40,
+        "unique_after_trim_lower": 40,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "text",
+        "injection_like_values": 0,
+        "sample_values": [
+          "P001",
+          "P002",
+          "P003",
+          "P004",
+          "P005"
+        ]
+      },
+      "store_id": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 13,
+        "unique_after_trim_lower": 8,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "text",
+        "injection_like_values": 0,
+        "sample_values": [
+          "S01",
+          "S02",
+          "S03",
+          "S04",
+          "S05"
+        ],
+        "spelling_variants": [
+          [
+            "S03",
+            "s03"
+          ],
+          [
+            "S04",
+            "s04"
+          ],
+          [
+            "S05",
+            "s05"
+          ],
+          [
+            "S06",
+            "s06"
+          ],
+          [
+            "S08",
+            "s08"
+          ]
+        ],
+        "format_patterns": {
+          "A9": 315,
+          "a9": 5
+        }
+      },
+      "stock_on_hand": {
+        "null_count": 6,
+        "null_pct": 1.88,
+        "all_null": false,
+        "unique_count": 11,
+        "unique_after_trim_lower": 11,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "numeric",
+        "parse_failures": 0,
+        "parse_failure_examples": [],
+        "numeric_with_symbols": 0,
+        "stats": {
+          "min": -5.0,
+          "max": 60.0,
+          "mean": 18.92,
+          "median": 8.0,
+          "negatives": 4,
+          "zeros": 73
+        }
+      },
+      "reorder_level": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 1,
+        "unique_after_trim_lower": 1,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "numeric",
+        "parse_failures": 0,
+        "parse_failure_examples": [],
+        "numeric_with_symbols": 0,
+        "stats": {
+          "min": 10.0,
+          "max": 10.0,
+          "mean": 10.0,
+          "median": 10.0,
+          "negatives": 0,
+          "zeros": 0
+        }
+      },
+      "last_restock_date": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 112,
+        "unique_after_trim_lower": 112,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "date",
+        "date_formats": {
+          "YYYY-MM-DD": 320
+        },
+        "mixed_date_formats": false,
+        "ambiguous_day_month": 0,
+        "date_order_evidence": {},
+        "unparsable_count": 0
+      }
+    }
+  },
+  "issues": [
+    {
+      "id": "ISS:inventory:stock_on_hand:MISSING_VALUES",
+      "dataset": "inventory",
+      "column": "stock_on_hand",
+      "type": "MISSING_VALUES",
+      "severity": "low",
+      "affected_count": 6,
+      "message": "6 empty values (1.88%).",
+      "evidence": {
+        "null_pct": 1.88
+      }
+    },
+    {
+      "id": "ISS:inventory:stock_on_hand:NEGATIVE_VALUES",
+      "dataset": "inventory",
+      "column": "stock_on_hand",
+      "type": "NEGATIVE_VALUES",
+      "severity": "medium",
+      "affected_count": 4,
+      "message": "Negative numbers found. They may be real (returns, backorders) or errors.",
+      "evidence": {}
+    },
+    {
+      "id": "ISS:inventory:store_id:MIXED_ID_FORMAT",
+      "dataset": "inventory",
+      "column": "store_id",
+      "type": "MIXED_ID_FORMAT",
+      "severity": "low",
+      "affected_count": 320,
+      "message": "Codes written in more than one format.",
+      "evidence": {
+        "patterns": {
+          "A9": 315,
+          "a9": 5
+        }
+      }
+    },
+    {
+      "id": "ISS:inventory:store_id:SPELLING_VARIANTS",
+      "dataset": "inventory",
+      "column": "store_id",
+      "type": "SPELLING_VARIANTS",
+      "severity": "low",
+      "affected_count": 5,
+      "message": "Same value written in different ways (case, spaces or punctuation).",
+      "evidence": {
+        "groups": [
+          [
+            "S03",
+            "s03"
+          ],
+          [
+            "S04",
+            "s04"
+          ],
+          [
+            "S05",
+            "s05"
+          ],
+          [
+            "S06",
+            "s06"
+          ],
+          [
+            "S08",
+            "s08"
+          ]
+        ],
+        "case_or_space_only": true
+      }
+    }
+  ],
+  "cleaning_plan": [
+    {
+      "step_id": "STEP:inventory:store_id:canonicalize_spelling_variants",
+      "order": 1,
+      "phase": "variants",
+      "dataset": "inventory",
+      "columns": [
+        "store_id"
+      ],
+      "action": "canonicalize_spelling_variants",
+      "reason": "Different spellings of the same value are merged into the most common one (ties: Title Case, then alphabetical).",
+      "risk": "low",
+      "source": "code",
+      "status": "planned",
+      "issue_ids": [
+        "ISS:inventory:store_id:SPELLING_VARIANTS"
+      ],
+      "params": {
+        "rule": "most_frequent_spelling"
+      },
+      "expected_rows_removed": {
+        "min": 0,
+        "max": 0
+      },
+      "confidence": null,
+      "review_note": null
+    },
+    {
+      "step_id": "STEP:inventory:store_id:normalize_id_format",
+      "order": 2,
+      "phase": "ids",
+      "dataset": "inventory",
+      "columns": [
+        "store_id"
+      ],
+      "action": "normalize_id_format",
+      "reason": "Codes use 2 formats. All are rewritten to the most common one (A9).",
+      "risk": "medium",
+      "source": "code",
+      "status": "planned",
+      "issue_ids": [
+        "ISS:inventory:store_id:MIXED_ID_FORMAT"
+      ],
+      "params": {
+        "dominant_pattern": "A9"
+      },
+      "expected_rows_removed": {
+        "min": 0,
+        "max": 0
+      },
+      "confidence": null,
+      "review_note": null
+    },
+    {
+      "step_id": "STEP:inventory:stock_on_hand:flag_for_review",
+      "order": 3,
+      "phase": "review",
+      "dataset": "inventory",
+      "columns": [
+        "stock_on_hand"
+      ],
+      "action": "flag_for_review",
+      "reason": "4 negative values. They could be real (backorders, returns) or errors, so we do not change them.",
+      "risk": "medium",
+      "source": "code",
+      "status": "needs_review",
+      "issue_ids": [
+        "ISS:inventory:stock_on_hand:NEGATIVE_VALUES"
+      ],
+      "params": {},
+      "expected_rows_removed": {
+        "min": 0,
+        "max": 0
+      },
+      "confidence": null,
+      "review_note": "Left unchanged."
+    },
+    {
+      "step_id": "STEP:inventory:stock_on_hand:leave_missing",
+      "order": 4,
+      "phase": "missing",
+      "dataset": "inventory",
+      "columns": [
+        "stock_on_hand"
+      ],
+      "action": "leave_missing",
+      "reason": "6 empty values. There is no safe way to invent them, so they stay empty.",
+      "risk": "low",
+      "source": "code",
+      "status": "skipped",
+      "issue_ids": [
+        "ISS:inventory:stock_on_hand:MISSING_VALUES"
+      ],
+      "params": {},
+      "expected_rows_removed": {
+        "min": 0,
+        "max": 0
+      },
+      "confidence": null,
+      "review_note": null
+    }
+  ],
+  "change_log": [
+    {
+      "step_id": "STEP:inventory:store_id:canonicalize_spelling_variants",
+      "order": 1,
+      "action": "canonicalize_spelling_variants",
+      "columns": [
+        "store_id"
+      ],
+      "rows_before": 320,
+      "rows_after": 320,
+      "cells_changed": 5,
+      "details": {
+        "merged": [
+          {
+            "from": "s03",
+            "to": "S03"
+          },
+          {
+            "from": "s04",
+            "to": "S04"
+          },
+          {
+            "from": "s05",
+            "to": "S05"
+          },
+          {
+            "from": "s06",
+            "to": "S06"
+          },
+          {
+            "from": "s08",
+            "to": "S08"
+          }
+        ],
+        "samples": {
+          "store_id": [
+            {
+              "row": 12,
+              "before": "s04",
+              "after": "S04"
+            },
+            {
+              "row": 72,
+              "before": "s08",
+              "after": "S08"
+            },
+            {
+              "row": 203,
+              "before": "s03",
+              "after": "S03"
+            }
+          ]
+        }
+      },
+      "status": "applied"
+    },
+    {
+      "step_id": "STEP:inventory:store_id:normalize_id_format",
+      "order": 2,
+      "action": "normalize_id_format",
+      "columns": [
+        "store_id"
+      ],
+      "rows_before": 320,
+      "rows_after": 320,
+      "cells_changed": 0,
+      "details": {},
+      "status": "applied"
+    },
+    {
+      "step_id": "STEP:inventory:stock_on_hand:flag_for_review",
+      "order": 3,
+      "action": "flag_for_review",
+      "columns": [
+        "stock_on_hand"
+      ],
+      "rows_before": 320,
+      "rows_after": 320,
+      "cells_changed": 0,
+      "details": {},
+      "status": "needs_review"
+    },
+    {
+      "step_id": "STEP:inventory:stock_on_hand:leave_missing",
+      "order": 4,
+      "action": "leave_missing",
+      "columns": [
+        "stock_on_hand"
+      ],
+      "rows_before": 320,
+      "rows_after": 320,
+      "cells_changed": 0,
+      "details": {},
+      "status": "skipped"
+    }
+  ],
+  "profile_after": {
+    "meta": {
+      "file_name": "inventory_clean.csv"
+    },
+    "row_count": 320,
+    "column_count": 5,
+    "column_names": [
+      "product_id",
+      "store_id",
+      "stock_on_hand",
+      "reorder_level",
+      "last_restock_date"
+    ],
+    "header_issues": [],
+    "duplicates": {
+      "exact_duplicate_rows": 0,
+      "extra_after_trim_and_lowercase": 0,
+      "key": null
+    },
+    "columns": {
+      "product_id": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 40,
+        "unique_after_trim_lower": 40,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "text",
+        "injection_like_values": 0,
+        "sample_values": [
+          "P001",
+          "P002",
+          "P003",
+          "P004",
+          "P005"
+        ]
+      },
+      "store_id": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 8,
+        "unique_after_trim_lower": 8,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "text",
+        "injection_like_values": 0,
+        "sample_values": [
+          "S01",
+          "S02",
+          "S03",
+          "S04",
+          "S05"
+        ],
+        "distinct_values": [
+          "S01",
+          "S02",
+          "S03",
+          "S04",
+          "S05",
+          "S06",
+          "S07",
+          "S08"
+        ]
+      },
+      "stock_on_hand": {
+        "null_count": 6,
+        "null_pct": 1.88,
+        "all_null": false,
+        "unique_count": 11,
+        "unique_after_trim_lower": 11,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "numeric",
+        "parse_failures": 0,
+        "parse_failure_examples": [],
+        "numeric_with_symbols": 0,
+        "stats": {
+          "min": -5.0,
+          "max": 60.0,
+          "mean": 18.92,
+          "median": 8.0,
+          "negatives": 4,
+          "zeros": 73
+        }
+      },
+      "reorder_level": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 1,
+        "unique_after_trim_lower": 1,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "numeric",
+        "parse_failures": 0,
+        "parse_failure_examples": [],
+        "numeric_with_symbols": 0,
+        "stats": {
+          "min": 10.0,
+          "max": 10.0,
+          "mean": 10.0,
+          "median": 10.0,
+          "negatives": 0,
+          "zeros": 0
+        }
+      },
+      "last_restock_date": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 112,
+        "unique_after_trim_lower": 112,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "date",
+        "date_formats": {
+          "YYYY-MM-DD": 320
+        },
+        "mixed_date_formats": false,
+        "ambiguous_day_month": 0,
+        "date_order_evidence": {},
+        "unparsable_count": 0
+      }
+    }
+  },
+  "issues_after": [
+    {
+      "id": "ISS:inventory:stock_on_hand:MISSING_VALUES",
+      "dataset": "inventory",
+      "column": "stock_on_hand",
+      "type": "MISSING_VALUES",
+      "severity": "low",
+      "affected_count": 6,
+      "message": "6 empty values (1.88%).",
+      "evidence": {
+        "null_pct": 1.88
+      }
+    },
+    {
+      "id": "ISS:inventory:stock_on_hand:NEGATIVE_VALUES",
+      "dataset": "inventory",
+      "column": "stock_on_hand",
+      "type": "NEGATIVE_VALUES",
+      "severity": "medium",
+      "affected_count": 4,
+      "message": "Negative numbers found. They may be real (returns, backorders) or errors.",
+      "evidence": {}
+    }
+  ],
+  "validation": {
+    "passed": true,
+    "checks": {
+      "schema_unchanged": true,
+      "rows_as_planned": true,
+      "rows_are_survivors": true,
+      "untouched_columns_identical": true,
+      "no_failed_steps": true,
+      "no_unexpected_issues": true,
+      "idempotent": true
+    },
+    "rows": {
+      "before": 320,
+      "after": 320,
+      "removed": 0,
+      "allowed_removed_min": 0,
+      "allowed_removed_max": 0
+    },
+    "columns": {
+      "before": 5,
+      "after": 5
+    },
+    "failed_steps": [],
+    "unexpected_issue_ids": [],
+    "left_for_review": [
+      "ISS:inventory:stock_on_hand:MISSING_VALUES",
+      "ISS:inventory:stock_on_hand:NEGATIVE_VALUES"
+    ],
+    "second_pass_changing_steps": []
+  },
+  "artifacts": {
+    "original": "data\\sample\\inventory.csv",
+    "original_sha256": "e02c732cc320ff5db9020c2b90d4b2d7100cf544c2f9c2627a1317f11bb19b88",
+    "cleaned": "data\\cleaned\\inventory_clean.csv",
+    "cleaned_sha256": "838f84dbf4d33c0a7648ef41816e49f691c4d990eb572720b05fcb0efa6c4090"
+  }
+}

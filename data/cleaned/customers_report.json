@@ -1,0 +1,540 @@
+{
+  "dataset": {
+    "name": "customers",
+    "source_file": "customers.csv",
+    "rows": 155,
+    "columns": 5,
+    "version": "customers_clean@2bbcba39f28d"
+  },
+  "profile_before": {
+    "meta": {
+      "file_name": "customers.csv",
+      "size_bytes": 9706,
+      "encoding": "utf-8",
+      "encoding_fallback": false
+    },
+    "row_count": 155,
+    "column_count": 5,
+    "column_names": [
+      "customer_id",
+      "name",
+      "email",
+      "city",
+      "signup_date"
+    ],
+    "header_issues": [],
+    "duplicates": {
+      "exact_duplicate_rows": 5,
+      "extra_after_trim_and_lowercase": 0,
+      "key": {
+        "column": "customer_id",
+        "repeated_key_rows": 5,
+        "conflicting_key_rows": 0
+      }
+    },
+    "columns": {
+      "customer_id": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 150,
+        "unique_after_trim_lower": 150,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "text",
+        "injection_like_values": 0,
+        "sample_values": [
+          "C0001",
+          "C0002",
+          "C0003",
+          "C0004",
+          "C0005"
+        ]
+      },
+      "name": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 73,
+        "unique_after_trim_lower": 73,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": true,
+        "kind": "text",
+        "injection_like_values": 0
+      },
+      "email": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 150,
+        "unique_after_trim_lower": 150,
+        "values_with_edge_spaces": 30,
+        "values_with_double_spaces": 30,
+        "pii_suspected": true,
+        "kind": "text",
+        "injection_like_values": 0,
+        "values_with_uppercase": 30
+      },
+      "city": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 9,
+        "unique_after_trim_lower": 7,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "text",
+        "injection_like_values": 0,
+        "sample_values": [
+          "mumbai",
+          "Kolkata",
+          "Pune",
+          "Mumbai",
+          "Bangalore"
+        ],
+        "distinct_values": [
+          "Bangalore",
+          "Bengaluru",
+          "Bombay",
+          "Delhi",
+          "Kolkata",
+          "Mumbai",
+          "Pune",
+          "bengaluru",
+          "mumbai"
+        ],
+        "spelling_variants": [
+          [
+            "Mumbai",
+            "mumbai"
+          ],
+          [
+            "Bengaluru",
+            "bengaluru"
+          ]
+        ]
+      },
+      "signup_date": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 131,
+        "unique_after_trim_lower": 131,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "date",
+        "date_formats": {
+          "YYYY-MM-DD": 155
+        },
+        "mixed_date_formats": false,
+        "ambiguous_day_month": 0,
+        "date_order_evidence": {},
+        "unparsable_count": 0
+      }
+    }
+  },
+  "issues": [
+    {
+      "id": "ISS:customers:_dataset:DUPLICATE_ROWS",
+      "dataset": "customers",
+      "column": null,
+      "type": "DUPLICATE_ROWS",
+      "severity": "medium",
+      "affected_count": 5,
+      "message": "5 rows are exact copies of another row.",
+      "evidence": {}
+    },
+    {
+      "id": "ISS:customers:city:SPELLING_VARIANTS",
+      "dataset": "customers",
+      "column": "city",
+      "type": "SPELLING_VARIANTS",
+      "severity": "low",
+      "affected_count": 2,
+      "message": "Same value written in different ways (case, spaces or punctuation).",
+      "evidence": {
+        "groups": [
+          [
+            "Mumbai",
+            "mumbai"
+          ],
+          [
+            "Bengaluru",
+            "bengaluru"
+          ]
+        ],
+        "case_or_space_only": true
+      }
+    },
+    {
+      "id": "ISS:customers:email:EMAIL_CASE",
+      "dataset": "customers",
+      "column": "email",
+      "type": "EMAIL_CASE",
+      "severity": "low",
+      "affected_count": 30,
+      "message": "Email addresses with capital letters.",
+      "evidence": {}
+    },
+    {
+      "id": "ISS:customers:email:WHITESPACE",
+      "dataset": "customers",
+      "column": "email",
+      "type": "WHITESPACE",
+      "severity": "low",
+      "affected_count": 30,
+      "message": "Extra spaces at the edges or inside values.",
+      "evidence": {
+        "edge": 30,
+        "double": 30
+      }
+    }
+  ],
+  "cleaning_plan": [
+    {
+      "step_id": "STEP:customers:email:trim_whitespace",
+      "order": 1,
+      "phase": "whitespace",
+      "dataset": "customers",
+      "columns": [
+        "email"
+      ],
+      "action": "trim_whitespace",
+      "reason": "Remove spaces at the start and end, and collapse double spaces.",
+      "risk": "low",
+      "source": "code",
+      "status": "planned",
+      "issue_ids": [
+        "ISS:customers:email:WHITESPACE"
+      ],
+      "params": {},
+      "expected_rows_removed": {
+        "min": 0,
+        "max": 0
+      },
+      "confidence": null,
+      "review_note": null
+    },
+    {
+      "step_id": "STEP:customers:email:lowercase_email",
+      "order": 2,
+      "phase": "variants",
+      "dataset": "customers",
+      "columns": [
+        "email"
+      ],
+      "action": "lowercase_email",
+      "reason": "Email addresses are written in lowercase.",
+      "risk": "low",
+      "source": "code",
+      "status": "planned",
+      "issue_ids": [
+        "ISS:customers:email:EMAIL_CASE"
+      ],
+      "params": {},
+      "expected_rows_removed": {
+        "min": 0,
+        "max": 0
+      },
+      "confidence": null,
+      "review_note": null
+    },
+    {
+      "step_id": "STEP:customers:city:canonicalize_spelling_variants",
+      "order": 3,
+      "phase": "variants",
+      "dataset": "customers",
+      "columns": [
+        "city"
+      ],
+      "action": "canonicalize_spelling_variants",
+      "reason": "Different spellings of the same value are merged into the most common one (ties: Title Case, then alphabetical).",
+      "risk": "low",
+      "source": "code",
+      "status": "planned",
+      "issue_ids": [
+        "ISS:customers:city:SPELLING_VARIANTS"
+      ],
+      "params": {
+        "rule": "most_frequent_spelling"
+      },
+      "expected_rows_removed": {
+        "min": 0,
+        "max": 0
+      },
+      "confidence": null,
+      "review_note": null
+    },
+    {
+      "step_id": "STEP:customers:*:drop_exact_duplicates",
+      "order": 4,
+      "phase": "duplicates",
+      "dataset": "customers",
+      "columns": [
+        "*"
+      ],
+      "action": "drop_exact_duplicates",
+      "reason": "Remove 5 exact copies (the first copy is kept).",
+      "risk": "low",
+      "source": "code",
+      "status": "planned",
+      "issue_ids": [
+        "ISS:customers:_dataset:DUPLICATE_ROWS"
+      ],
+      "params": {},
+      "expected_rows_removed": {
+        "min": 5,
+        "max": 5
+      },
+      "confidence": null,
+      "review_note": null
+    }
+  ],
+  "change_log": [
+    {
+      "step_id": "STEP:customers:email:trim_whitespace",
+      "order": 1,
+      "action": "trim_whitespace",
+      "columns": [
+        "email"
+      ],
+      "rows_before": 155,
+      "rows_after": 155,
+      "cells_changed": 30,
+      "details": {},
+      "status": "applied"
+    },
+    {
+      "step_id": "STEP:customers:email:lowercase_email",
+      "order": 2,
+      "action": "lowercase_email",
+      "columns": [
+        "email"
+      ],
+      "rows_before": 155,
+      "rows_after": 155,
+      "cells_changed": 30,
+      "details": {},
+      "status": "applied"
+    },
+    {
+      "step_id": "STEP:customers:city:canonicalize_spelling_variants",
+      "order": 3,
+      "action": "canonicalize_spelling_variants",
+      "columns": [
+        "city"
+      ],
+      "rows_before": 155,
+      "rows_after": 155,
+      "cells_changed": 10,
+      "details": {
+        "merged": [
+          {
+            "from": "mumbai",
+            "to": "Mumbai"
+          },
+          {
+            "from": "bengaluru",
+            "to": "Bengaluru"
+          }
+        ],
+        "samples": {
+          "city": [
+            {
+              "row": 1,
+              "before": "mumbai",
+              "after": "Mumbai"
+            },
+            {
+              "row": 15,
+              "before": "bengaluru",
+              "after": "Bengaluru"
+            },
+            {
+              "row": 19,
+              "before": "mumbai",
+              "after": "Mumbai"
+            }
+          ]
+        }
+      },
+      "status": "applied"
+    },
+    {
+      "step_id": "STEP:customers:*:drop_exact_duplicates",
+      "order": 4,
+      "action": "drop_exact_duplicates",
+      "columns": [
+        "*"
+      ],
+      "rows_before": 155,
+      "rows_after": 150,
+      "cells_changed": 0,
+      "details": {
+        "rows_removed": 5,
+        "removed_source_rows": [
+          151,
+          152,
+          153,
+          154,
+          155
+        ]
+      },
+      "status": "applied"
+    }
+  ],
+  "profile_after": {
+    "meta": {
+      "file_name": "customers_clean.csv"
+    },
+    "row_count": 150,
+    "column_count": 5,
+    "column_names": [
+      "customer_id",
+      "name",
+      "email",
+      "city",
+      "signup_date"
+    ],
+    "header_issues": [],
+    "duplicates": {
+      "exact_duplicate_rows": 0,
+      "extra_after_trim_and_lowercase": 0,
+      "key": {
+        "column": "customer_id",
+        "repeated_key_rows": 0,
+        "conflicting_key_rows": 0
+      }
+    },
+    "columns": {
+      "customer_id": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 150,
+        "unique_after_trim_lower": 150,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "text",
+        "injection_like_values": 0,
+        "sample_values": [
+          "C0001",
+          "C0002",
+          "C0003",
+          "C0004",
+          "C0005"
+        ]
+      },
+      "name": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 73,
+        "unique_after_trim_lower": 73,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": true,
+        "kind": "text",
+        "injection_like_values": 0
+      },
+      "email": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 150,
+        "unique_after_trim_lower": 150,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": true,
+        "kind": "text",
+        "injection_like_values": 0,
+        "values_with_uppercase": 0
+      },
+      "city": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 7,
+        "unique_after_trim_lower": 7,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "text",
+        "injection_like_values": 0,
+        "sample_values": [
+          "Mumbai",
+          "Kolkata",
+          "Pune",
+          "Bangalore",
+          "Delhi"
+        ],
+        "distinct_values": [
+          "Bangalore",
+          "Bengaluru",
+          "Bombay",
+          "Delhi",
+          "Kolkata",
+          "Mumbai",
+          "Pune"
+        ]
+      },
+      "signup_date": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 131,
+        "unique_after_trim_lower": 131,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "date",
+        "date_formats": {
+          "YYYY-MM-DD": 150
+        },
+        "mixed_date_formats": false,
+        "ambiguous_day_month": 0,
+        "date_order_evidence": {},
+        "unparsable_count": 0
+      }
+    }
+  },
+  "issues_after": [],
+  "validation": {
+    "passed": true,
+    "checks": {
+      "schema_unchanged": true,
+      "rows_as_planned": true,
+      "rows_are_survivors": true,
+      "untouched_columns_identical": true,
+      "no_failed_steps": true,
+      "no_unexpected_issues": true,
+      "idempotent": true
+    },
+    "rows": {
+      "before": 155,
+      "after": 150,
+      "removed": 5,
+      "allowed_removed_min": 5,
+      "allowed_removed_max": 5
+    },
+    "columns": {
+      "before": 5,
+      "after": 5
+    },
+    "failed_steps": [],
+    "unexpected_issue_ids": [],
+    "left_for_review": [],
+    "second_pass_changing_steps": []
+  },
+  "artifacts": {
+    "original": "data\\sample\\customers.csv",
+    "original_sha256": "97dc64bd8ae58074766958ff9dea6ed13582d3cf880cc38be96d2149fa724d77",
+    "cleaned": "data\\cleaned\\customers_clean.csv",
+    "cleaned_sha256": "2bbcba39f28d9fb868016b28b243615ea89dee0ffc0c721fdb9ff5fc629fb3e7"
+  }
+}

@@ -1,0 +1,1196 @@
+{
+  "dataset": {
+    "name": "orders",
+    "source_file": "orders.csv",
+    "rows": 1512,
+    "columns": 8,
+    "version": "orders_clean@c8b71733fa73"
+  },
+  "profile_before": {
+    "meta": {
+      "file_name": "orders.csv",
+      "size_bytes": 66442,
+      "encoding": "utf-8",
+      "encoding_fallback": false
+    },
+    "row_count": 1512,
+    "column_count": 8,
+    "column_names": [
+      "order_id",
+      "order_date",
+      "customer_id",
+      "product_id",
+      "store_id",
+      "quantity",
+      "revenue",
+      "returned"
+    ],
+    "header_issues": [],
+    "duplicates": {
+      "exact_duplicate_rows": 12,
+      "extra_after_trim_and_lowercase": 0,
+      "key": {
+        "column": "order_id",
+        "repeated_key_rows": 12,
+        "conflicting_key_rows": 0
+      }
+    },
+    "columns": {
+      "order_id": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 1500,
+        "unique_after_trim_lower": 1500,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "text",
+        "injection_like_values": 0,
+        "sample_values": [
+          "O00045",
+          "O01174",
+          "O00811",
+          "O00789",
+          "O00270"
+        ]
+      },
+      "order_date": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 722,
+        "unique_after_trim_lower": 722,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "date",
+        "date_formats": {
+          "YYYY-MM-DD": 845,
+          "NN/NN/YYYY": 361,
+          "DD Mon YYYY": 182,
+          "NN-NN-YYYY": 124
+        },
+        "mixed_date_formats": true,
+        "ambiguous_day_month": 177,
+        "date_order_evidence": {
+          "NN/NN/YYYY": {
+            "day_first_proof": 226,
+            "month_first_proof": 0,
+            "ambiguous": 125
+          },
+          "NN-NN-YYYY": {
+            "day_first_proof": 0,
+            "month_first_proof": 64,
+            "ambiguous": 52
+          }
+        },
+        "unparsable_count": 0
+      },
+      "customer_id": {
+        "null_count": 10,
+        "null_pct": 0.66,
+        "all_null": false,
+        "unique_count": 150,
+        "unique_after_trim_lower": 150,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "text",
+        "injection_like_values": 0,
+        "sample_values": [
+          "C0115",
+          "C0067",
+          "C0072",
+          "C0088",
+          "C0035"
+        ]
+      },
+      "product_id": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 41,
+        "unique_after_trim_lower": 41,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "text",
+        "injection_like_values": 0,
+        "sample_values": [
+          "P016",
+          "P033",
+          "P006",
+          "P031",
+          "P018"
+        ]
+      },
+      "store_id": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 8,
+        "unique_after_trim_lower": 8,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "text",
+        "injection_like_values": 0,
+        "sample_values": [
+          "S04",
+          "S08",
+          "S07",
+          "S06",
+          "S03"
+        ],
+        "distinct_values": [
+          "S01",
+          "S02",
+          "S03",
+          "S04",
+          "S05",
+          "S06",
+          "S07",
+          "S08"
+        ]
+      },
+      "quantity": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 6,
+        "unique_after_trim_lower": 6,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "numeric",
+        "parse_failures": 4,
+        "parse_failure_examples": [
+          "one",
+          "two",
+          "three"
+        ],
+        "numeric_with_symbols": 0,
+        "stats": {
+          "min": 1.0,
+          "max": 3.0,
+          "mean": 1.66,
+          "median": 2.0,
+          "negatives": 0,
+          "zeros": 0
+        }
+      },
+      "revenue": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 48,
+        "unique_after_trim_lower": 48,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "numeric",
+        "parse_failures": 0,
+        "parse_failure_examples": [],
+        "numeric_with_symbols": 151,
+        "stats": {
+          "min": 499.0,
+          "max": 8997.0,
+          "mean": 3066.26,
+          "median": 2598.0,
+          "negatives": 0,
+          "zeros": 0
+        }
+      },
+      "returned": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 8,
+        "unique_after_trim_lower": 6,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "text",
+        "injection_like_values": 0,
+        "sample_values": [
+          "N",
+          "0",
+          "no",
+          "Y",
+          "yes"
+        ],
+        "distinct_values": [
+          "0",
+          "1",
+          "N",
+          "No",
+          "Y",
+          "Yes",
+          "no",
+          "yes"
+        ],
+        "spelling_variants": [
+          [
+            "No",
+            "no"
+          ],
+          [
+            "Yes",
+            "yes"
+          ]
+        ]
+      }
+    }
+  },
+  "issues": [
+    {
+      "id": "ISS:orders:_dataset:DUPLICATE_ROWS",
+      "dataset": "orders",
+      "column": null,
+      "type": "DUPLICATE_ROWS",
+      "severity": "medium",
+      "affected_count": 12,
+      "message": "12 rows are exact copies of another row.",
+      "evidence": {}
+    },
+    {
+      "id": "ISS:orders:customer_id:MISSING_VALUES",
+      "dataset": "orders",
+      "column": "customer_id",
+      "type": "MISSING_VALUES",
+      "severity": "low",
+      "affected_count": 10,
+      "message": "10 empty values (0.66%).",
+      "evidence": {
+        "null_pct": 0.66
+      }
+    },
+    {
+      "id": "ISS:orders:order_date:AMBIGUOUS_DATES",
+      "dataset": "orders",
+      "column": "order_date",
+      "type": "AMBIGUOUS_DATES",
+      "severity": "medium",
+      "affected_count": 177,
+      "message": "Some dates can be read as day/month or month/day.",
+      "evidence": {
+        "order_evidence": {
+          "NN/NN/YYYY": {
+            "day_first_proof": 226,
+            "month_first_proof": 0,
+            "ambiguous": 125
+          },
+          "NN-NN-YYYY": {
+            "day_first_proof": 0,
+            "month_first_proof": 64,
+            "ambiguous": 52
+          }
+        }
+      }
+    },
+    {
+      "id": "ISS:orders:order_date:DATE_FORMAT",
+      "dataset": "orders",
+      "column": "order_date",
+      "type": "DATE_FORMAT",
+      "severity": "medium",
+      "affected_count": 667,
+      "message": "Dates are not all written as YYYY-MM-DD.",
+      "evidence": {
+        "formats": {
+          "YYYY-MM-DD": 845,
+          "NN/NN/YYYY": 361,
+          "DD Mon YYYY": 182,
+          "NN-NN-YYYY": 124
+        }
+      }
+    },
+    {
+      "id": "ISS:orders:quantity:NON_NUMERIC_IN_NUMERIC",
+      "dataset": "orders",
+      "column": "quantity",
+      "type": "NON_NUMERIC_IN_NUMERIC",
+      "severity": "medium",
+      "affected_count": 4,
+      "message": "Some values in a number column are not numbers.",
+      "evidence": {
+        "examples": [
+          "one",
+          "two",
+          "three"
+        ]
+      }
+    },
+    {
+      "id": "ISS:orders:returned:SPELLING_VARIANTS",
+      "dataset": "orders",
+      "column": "returned",
+      "type": "SPELLING_VARIANTS",
+      "severity": "low",
+      "affected_count": 2,
+      "message": "Same value written in different ways (case, spaces or punctuation).",
+      "evidence": {
+        "groups": [
+          [
+            "No",
+            "no"
+          ],
+          [
+            "Yes",
+            "yes"
+          ]
+        ],
+        "case_or_space_only": true
+      }
+    },
+    {
+      "id": "ISS:orders:revenue:NUMBERS_AS_TEXT",
+      "dataset": "orders",
+      "column": "revenue",
+      "type": "NUMBERS_AS_TEXT",
+      "severity": "low",
+      "affected_count": 151,
+      "message": "Numbers written with currency signs or commas.",
+      "evidence": {}
+    }
+  ],
+  "cleaning_plan": [
+    {
+      "step_id": "STEP:orders:quantity:convert_number_words",
+      "order": 1,
+      "phase": "numbers",
+      "dataset": "orders",
+      "columns": [
+        "quantity"
+      ],
+      "action": "convert_number_words",
+      "reason": "Numbers written as words (one, three, two) become digits.",
+      "risk": "low",
+      "source": "code",
+      "status": "planned",
+      "issue_ids": [
+        "ISS:orders:quantity:NON_NUMERIC_IN_NUMERIC"
+      ],
+      "params": {
+        "words": [
+          "one",
+          "three",
+          "two"
+        ]
+      },
+      "expected_rows_removed": {
+        "min": 0,
+        "max": 0
+      },
+      "confidence": null,
+      "review_note": null
+    },
+    {
+      "step_id": "STEP:orders:revenue:strip_currency_and_commas",
+      "order": 2,
+      "phase": "numbers",
+      "dataset": "orders",
+      "columns": [
+        "revenue"
+      ],
+      "action": "strip_currency_and_commas",
+      "reason": "151 numbers have 'Rs.', a currency sign or commas. Only the symbols are removed; the number is unchanged.",
+      "risk": "low",
+      "source": "code",
+      "status": "planned",
+      "issue_ids": [
+        "ISS:orders:revenue:NUMBERS_AS_TEXT"
+      ],
+      "params": {},
+      "expected_rows_removed": {
+        "min": 0,
+        "max": 0
+      },
+      "confidence": null,
+      "review_note": null
+    },
+    {
+      "step_id": "STEP:orders:order_date:convert_date_to_iso:dd-mon-yyyy",
+      "order": 3,
+      "phase": "dates",
+      "dataset": "orders",
+      "columns": [
+        "order_date"
+      ],
+      "action": "convert_date_to_iso",
+      "reason": "182 dates written like '05 Jan 2026'. The month name makes them unambiguous.",
+      "risk": "low",
+      "source": "code",
+      "status": "planned",
+      "issue_ids": [
+        "ISS:orders:order_date:DATE_FORMAT"
+      ],
+      "params": {
+        "shape": "DD Mon YYYY",
+        "order": "named_month"
+      },
+      "expected_rows_removed": {
+        "min": 0,
+        "max": 0
+      },
+      "confidence": null,
+      "review_note": null
+    },
+    {
+      "step_id": "STEP:orders:order_date:convert_date_to_iso:nn-dash",
+      "order": 4,
+      "phase": "dates",
+      "dataset": "orders",
+      "columns": [
+        "order_date"
+      ],
+      "action": "convert_date_to_iso",
+      "reason": "124 dates in NN-NN-YYYY. 64 of them can only be month-first, and none can only be day-first, so 52 ambiguous ones are read month-first too.",
+      "risk": "medium",
+      "source": "code",
+      "status": "planned",
+      "issue_ids": [
+        "ISS:orders:order_date:DATE_FORMAT",
+        "ISS:orders:order_date:AMBIGUOUS_DATES"
+      ],
+      "params": {
+        "shape": "NN-NN-YYYY",
+        "proof_day_first": 0,
+        "proof_month_first": 64,
+        "ambiguous_values": 52,
+        "order": "month_first"
+      },
+      "expected_rows_removed": {
+        "min": 0,
+        "max": 0
+      },
+      "confidence": "high",
+      "review_note": "Assumption: one date order per format. Ambiguous rows are listed in the change log."
+    },
+    {
+      "step_id": "STEP:orders:order_date:convert_date_to_iso:nn-slash",
+      "order": 5,
+      "phase": "dates",
+      "dataset": "orders",
+      "columns": [
+        "order_date"
+      ],
+      "action": "convert_date_to_iso",
+      "reason": "361 dates in NN/NN/YYYY. 226 of them can only be day-first (e.g. a day above 12), and none can only be month-first, so 125 ambiguous ones are read day-first too.",
+      "risk": "medium",
+      "source": "code",
+      "status": "planned",
+      "issue_ids": [
+        "ISS:orders:order_date:DATE_FORMAT",
+        "ISS:orders:order_date:AMBIGUOUS_DATES"
+      ],
+      "params": {
+        "shape": "NN/NN/YYYY",
+        "proof_day_first": 226,
+        "proof_month_first": 0,
+        "ambiguous_values": 125,
+        "order": "day_first"
+      },
+      "expected_rows_removed": {
+        "min": 0,
+        "max": 0
+      },
+      "confidence": "high",
+      "review_note": "Assumption: one date order per format. Ambiguous rows are listed in the change log."
+    },
+    {
+      "step_id": "STEP:orders:returned:canonicalize_spelling_variants",
+      "order": 6,
+      "phase": "variants",
+      "dataset": "orders",
+      "columns": [
+        "returned"
+      ],
+      "action": "canonicalize_spelling_variants",
+      "reason": "Different spellings of the same value are merged into the most common one (ties: Title Case, then alphabetical).",
+      "risk": "low",
+      "source": "code",
+      "status": "planned",
+      "issue_ids": [
+        "ISS:orders:returned:SPELLING_VARIANTS"
+      ],
+      "params": {
+        "rule": "most_frequent_spelling"
+      },
+      "expected_rows_removed": {
+        "min": 0,
+        "max": 0
+      },
+      "confidence": null,
+      "review_note": null
+    },
+    {
+      "step_id": "STEP:orders:*:drop_exact_duplicates",
+      "order": 7,
+      "phase": "duplicates",
+      "dataset": "orders",
+      "columns": [
+        "*"
+      ],
+      "action": "drop_exact_duplicates",
+      "reason": "Remove 12 exact copies (the first copy is kept).",
+      "risk": "low",
+      "source": "code",
+      "status": "planned",
+      "issue_ids": [
+        "ISS:orders:_dataset:DUPLICATE_ROWS"
+      ],
+      "params": {},
+      "expected_rows_removed": {
+        "min": 12,
+        "max": 12
+      },
+      "confidence": null,
+      "review_note": null
+    },
+    {
+      "step_id": "STEP:orders:customer_id:leave_missing",
+      "order": 8,
+      "phase": "missing",
+      "dataset": "orders",
+      "columns": [
+        "customer_id"
+      ],
+      "action": "leave_missing",
+      "reason": "10 empty values. There is no safe way to invent them, so they stay empty.",
+      "risk": "low",
+      "source": "code",
+      "status": "skipped",
+      "issue_ids": [
+        "ISS:orders:customer_id:MISSING_VALUES"
+      ],
+      "params": {},
+      "expected_rows_removed": {
+        "min": 0,
+        "max": 0
+      },
+      "confidence": null,
+      "review_note": null
+    }
+  ],
+  "change_log": [
+    {
+      "step_id": "STEP:orders:quantity:convert_number_words",
+      "order": 1,
+      "action": "convert_number_words",
+      "columns": [
+        "quantity"
+      ],
+      "rows_before": 1512,
+      "rows_after": 1512,
+      "cells_changed": 4,
+      "details": {
+        "samples": {
+          "quantity": [
+            {
+              "row": 155,
+              "before": "one",
+              "after": "1"
+            },
+            {
+              "row": 255,
+              "before": "one",
+              "after": "1"
+            },
+            {
+              "row": 321,
+              "before": "two",
+              "after": "2"
+            }
+          ]
+        }
+      },
+      "status": "applied"
+    },
+    {
+      "step_id": "STEP:orders:revenue:strip_currency_and_commas",
+      "order": 2,
+      "action": "strip_currency_and_commas",
+      "columns": [
+        "revenue"
+      ],
+      "rows_before": 1512,
+      "rows_after": 1512,
+      "cells_changed": 151,
+      "details": {
+        "samples": {
+          "revenue": [
+            {
+              "row": 8,
+              "before": "Rs. 2,097",
+              "after": "2097"
+            },
+            {
+              "row": 9,
+              "before": "Rs. 1,599",
+              "after": "1599"
+            },
+            {
+              "row": 14,
+              "before": "Rs. 2,697",
+              "after": "2697"
+            }
+          ]
+        }
+      },
+      "status": "applied"
+    },
+    {
+      "step_id": "STEP:orders:order_date:convert_date_to_iso:dd-mon-yyyy",
+      "order": 3,
+      "action": "convert_date_to_iso",
+      "columns": [
+        "order_date"
+      ],
+      "rows_before": 1512,
+      "rows_after": 1512,
+      "cells_changed": 182,
+      "details": {
+        "order_used": "named_month",
+        "not_real_dates_left_unchanged": 0,
+        "ambiguous_values_converted": 0,
+        "ambiguous_source_rows": [],
+        "samples": {
+          "order_date": [
+            {
+              "row": 9,
+              "before": "23 Oct 2026",
+              "after": "2026-10-23"
+            },
+            {
+              "row": 29,
+              "before": "07 Apr 2026",
+              "after": "2026-04-07"
+            },
+            {
+              "row": 30,
+              "before": "10 Jul 2026",
+              "after": "2026-07-10"
+            }
+          ]
+        }
+      },
+      "status": "applied"
+    },
+    {
+      "step_id": "STEP:orders:order_date:convert_date_to_iso:nn-dash",
+      "order": 4,
+      "action": "convert_date_to_iso",
+      "columns": [
+        "order_date"
+      ],
+      "rows_before": 1512,
+      "rows_after": 1512,
+      "cells_changed": 124,
+      "details": {
+        "order_used": "month_first",
+        "not_real_dates_left_unchanged": 0,
+        "ambiguous_values_converted": 52,
+        "ambiguous_source_rows": [
+          68,
+          76,
+          78,
+          104,
+          161,
+          180,
+          195,
+          260,
+          351,
+          378,
+          551,
+          565,
+          610,
+          619,
+          640,
+          694,
+          711,
+          717,
+          718,
+          765,
+          776,
+          811,
+          825,
+          848,
+          864,
+          871,
+          887,
+          930,
+          982,
+          997,
+          999,
+          1004,
+          1076,
+          1079,
+          1097,
+          1186,
+          1206,
+          1244,
+          1261,
+          1280,
+          1287,
+          1294,
+          1323,
+          1331,
+          1346,
+          1367,
+          1374,
+          1382,
+          1387,
+          1393
+        ],
+        "samples": {
+          "order_date": [
+            {
+              "row": 8,
+              "before": "10-19-2026",
+              "after": "2026-10-19"
+            },
+            {
+              "row": 23,
+              "before": "10-22-2026",
+              "after": "2026-10-22"
+            },
+            {
+              "row": 42,
+              "before": "09-30-2026",
+              "after": "2026-09-30"
+            }
+          ]
+        }
+      },
+      "status": "applied"
+    },
+    {
+      "step_id": "STEP:orders:order_date:convert_date_to_iso:nn-slash",
+      "order": 5,
+      "action": "convert_date_to_iso",
+      "columns": [
+        "order_date"
+      ],
+      "rows_before": 1512,
+      "rows_after": 1512,
+      "cells_changed": 361,
+      "details": {
+        "order_used": "day_first",
+        "not_real_dates_left_unchanged": 0,
+        "ambiguous_values_converted": 125,
+        "ambiguous_source_rows": [
+          13,
+          28,
+          45,
+          70,
+          74,
+          85,
+          116,
+          138,
+          155,
+          164,
+          169,
+          170,
+          187,
+          193,
+          210,
+          219,
+          223,
+          240,
+          249,
+          258,
+          267,
+          279,
+          282,
+          287,
+          327,
+          332,
+          357,
+          358,
+          361,
+          362,
+          407,
+          409,
+          452,
+          460,
+          465,
+          469,
+          477,
+          496,
+          506,
+          515,
+          530,
+          541,
+          548,
+          558,
+          579,
+          580,
+          586,
+          591,
+          600,
+          607
+        ],
+        "samples": {
+          "order_date": [
+            {
+              "row": 3,
+              "before": "27/09/2026",
+              "after": "2026-09-27"
+            },
+            {
+              "row": 6,
+              "before": "19/07/2026",
+              "after": "2026-07-19"
+            },
+            {
+              "row": 13,
+              "before": "12/08/2026",
+              "after": "2026-08-12"
+            }
+          ]
+        }
+      },
+      "status": "applied"
+    },
+    {
+      "step_id": "STEP:orders:returned:canonicalize_spelling_variants",
+      "order": 6,
+      "action": "canonicalize_spelling_variants",
+      "columns": [
+        "returned"
+      ],
+      "rows_before": 1512,
+      "rows_after": 1512,
+      "cells_changed": 182,
+      "details": {
+        "merged": [
+          {
+            "from": "No",
+            "to": "no"
+          },
+          {
+            "from": "yes",
+            "to": "Yes"
+          }
+        ],
+        "samples": {
+          "returned": [
+            {
+              "row": 10,
+              "before": "yes",
+              "after": "Yes"
+            },
+            {
+              "row": 13,
+              "before": "yes",
+              "after": "Yes"
+            },
+            {
+              "row": 15,
+              "before": "yes",
+              "after": "Yes"
+            }
+          ]
+        }
+      },
+      "status": "applied"
+    },
+    {
+      "step_id": "STEP:orders:*:drop_exact_duplicates",
+      "order": 7,
+      "action": "drop_exact_duplicates",
+      "columns": [
+        "*"
+      ],
+      "rows_before": 1512,
+      "rows_after": 1500,
+      "cells_changed": 0,
+      "details": {
+        "rows_removed": 12,
+        "removed_source_rows": [
+          760,
+          836,
+          956,
+          1067,
+          1087,
+          1155,
+          1194,
+          1248,
+          1275,
+          1306,
+          1387,
+          1474
+        ]
+      },
+      "status": "applied"
+    },
+    {
+      "step_id": "STEP:orders:customer_id:leave_missing",
+      "order": 8,
+      "action": "leave_missing",
+      "columns": [
+        "customer_id"
+      ],
+      "rows_before": 1500,
+      "rows_after": 1500,
+      "cells_changed": 0,
+      "details": {},
+      "status": "skipped"
+    }
+  ],
+  "profile_after": {
+    "meta": {
+      "file_name": "orders_clean.csv"
+    },
+    "row_count": 1500,
+    "column_count": 8,
+    "column_names": [
+      "order_id",
+      "order_date",
+      "customer_id",
+      "product_id",
+      "store_id",
+      "quantity",
+      "revenue",
+      "returned"
+    ],
+    "header_issues": [],
+    "duplicates": {
+      "exact_duplicate_rows": 0,
+      "extra_after_trim_and_lowercase": 0,
+      "key": {
+        "column": "order_id",
+        "repeated_key_rows": 0,
+        "conflicting_key_rows": 0
+      }
+    },
+    "columns": {
+      "order_id": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 1500,
+        "unique_after_trim_lower": 1500,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "text",
+        "injection_like_values": 0,
+        "sample_values": [
+          "O00045",
+          "O01174",
+          "O00811",
+          "O00789",
+          "O00270"
+        ]
+      },
+      "order_date": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 298,
+        "unique_after_trim_lower": 298,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "date",
+        "date_formats": {
+          "YYYY-MM-DD": 1500
+        },
+        "mixed_date_formats": false,
+        "ambiguous_day_month": 0,
+        "date_order_evidence": {},
+        "unparsable_count": 0
+      },
+      "customer_id": {
+        "null_count": 10,
+        "null_pct": 0.67,
+        "all_null": false,
+        "unique_count": 150,
+        "unique_after_trim_lower": 150,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "text",
+        "injection_like_values": 0,
+        "sample_values": [
+          "C0115",
+          "C0067",
+          "C0072",
+          "C0088",
+          "C0035"
+        ]
+      },
+      "product_id": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 41,
+        "unique_after_trim_lower": 41,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "text",
+        "injection_like_values": 0,
+        "sample_values": [
+          "P016",
+          "P033",
+          "P006",
+          "P031",
+          "P018"
+        ]
+      },
+      "store_id": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 8,
+        "unique_after_trim_lower": 8,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "text",
+        "injection_like_values": 0,
+        "sample_values": [
+          "S04",
+          "S08",
+          "S07",
+          "S06",
+          "S03"
+        ],
+        "distinct_values": [
+          "S01",
+          "S02",
+          "S03",
+          "S04",
+          "S05",
+          "S06",
+          "S07",
+          "S08"
+        ]
+      },
+      "quantity": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 3,
+        "unique_after_trim_lower": 3,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "numeric",
+        "parse_failures": 0,
+        "parse_failure_examples": [],
+        "numeric_with_symbols": 0,
+        "stats": {
+          "min": 1.0,
+          "max": 3.0,
+          "mean": 1.66,
+          "median": 2.0,
+          "negatives": 0,
+          "zeros": 0
+        }
+      },
+      "revenue": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 24,
+        "unique_after_trim_lower": 24,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "numeric",
+        "parse_failures": 0,
+        "parse_failure_examples": [],
+        "numeric_with_symbols": 0,
+        "stats": {
+          "min": 499.0,
+          "max": 8997.0,
+          "mean": 3068.34,
+          "median": 2598.0,
+          "negatives": 0,
+          "zeros": 0
+        }
+      },
+      "returned": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 6,
+        "unique_after_trim_lower": 6,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "text",
+        "injection_like_values": 0,
+        "sample_values": [
+          "N",
+          "0",
+          "no",
+          "Y",
+          "Yes"
+        ],
+        "distinct_values": [
+          "0",
+          "1",
+          "N",
+          "Y",
+          "Yes",
+          "no"
+        ]
+      }
+    }
+  },
+  "issues_after": [
+    {
+      "id": "ISS:orders:customer_id:MISSING_VALUES",
+      "dataset": "orders",
+      "column": "customer_id",
+      "type": "MISSING_VALUES",
+      "severity": "low",
+      "affected_count": 10,
+      "message": "10 empty values (0.67%).",
+      "evidence": {
+        "null_pct": 0.67
+      }
+    }
+  ],
+  "validation": {
+    "passed": true,
+    "checks": {
+      "schema_unchanged": true,
+      "rows_as_planned": true,
+      "rows_are_survivors": true,
+      "untouched_columns_identical": true,
+      "no_failed_steps": true,
+      "no_unexpected_issues": true,
+      "idempotent": true
+    },
+    "rows": {
+      "before": 1512,
+      "after": 1500,
+      "removed": 12,
+      "allowed_removed_min": 12,
+      "allowed_removed_max": 12
+    },
+    "columns": {
+      "before": 8,
+      "after": 8
+    },
+    "failed_steps": [],
+    "unexpected_issue_ids": [],
+    "left_for_review": [
+      "ISS:orders:customer_id:MISSING_VALUES"
+    ],
+    "second_pass_changing_steps": []
+  },
+  "artifacts": {
+    "original": "data\\sample\\orders.csv",
+    "original_sha256": "e106ff7f2de58c5410af6387c36622ae9aec32366f67abbc1a51280e65961dd7",
+    "cleaned": "data\\cleaned\\orders_clean.csv",
+    "cleaned_sha256": "c8b71733fa7359a873967b7f8af70cbe4c212de1ccc57adb6573739f5d569af5"
+  }
+}

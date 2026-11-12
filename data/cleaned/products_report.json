@@ -1,0 +1,1026 @@
+{
+  "dataset": {
+    "name": "products",
+    "source_file": "products.csv",
+    "rows": 43,
+    "columns": 7,
+    "version": "products_clean@b6bca86b1eff"
+  },
+  "profile_before": {
+    "meta": {
+      "file_name": "products.csv",
+      "size_bytes": 2537,
+      "encoding": "utf-8",
+      "encoding_fallback": false
+    },
+    "row_count": 43,
+    "column_count": 7,
+    "column_names": [
+      "product_id",
+      "sku",
+      "product_name",
+      "category",
+      "brand",
+      "price",
+      "cost"
+    ],
+    "header_issues": [],
+    "duplicates": {
+      "exact_duplicate_rows": 3,
+      "extra_after_trim_and_lowercase": 0,
+      "key": {
+        "column": "product_id",
+        "repeated_key_rows": 3,
+        "conflicting_key_rows": 0
+      }
+    },
+    "columns": {
+      "product_id": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 40,
+        "unique_after_trim_lower": 40,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "text",
+        "injection_like_values": 0,
+        "sample_values": [
+          "P001",
+          "P002",
+          "P003",
+          "P004",
+          "P005"
+        ]
+      },
+      "sku": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 40,
+        "unique_after_trim_lower": 40,
+        "values_with_edge_spaces": 4,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "text",
+        "injection_like_values": 0,
+        "sample_values": [
+          "SKU-0001",
+          "SKU-0002",
+          "SKU-0003",
+          "SKU-0004",
+          "SKU-0005"
+        ],
+        "format_patterns": {
+          "A-9": 35,
+          "a-9": 4,
+          "a9": 3,
+          "A9": 1
+        }
+      },
+      "product_name": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 40,
+        "unique_after_trim_lower": 40,
+        "values_with_edge_spaces": 13,
+        "values_with_double_spaces": 13,
+        "pii_suspected": false,
+        "kind": "text",
+        "injection_like_values": 1,
+        "injection_like_rows": [
+          7
+        ],
+        "sample_values": [
+          "Slim  T-Shirt 1",
+          "Classic Jeans 2",
+          "Classic Jacket 3",
+          "Casual  Shoes 4",
+          "Classic Dress 5"
+        ]
+      },
+      "category": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 16,
+        "unique_after_trim_lower": 12,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "text",
+        "injection_like_values": 0,
+        "sample_values": [
+          "Tee",
+          "Denim",
+          "Jacket",
+          "shoes",
+          "Dress"
+        ],
+        "spelling_variants": [
+          [
+            "Jacket",
+            "jacket"
+          ],
+          [
+            "Shoes",
+            "shoes"
+          ],
+          [
+            "Dress",
+            "dress"
+          ],
+          [
+            "T Shirt",
+            "T-Shirt",
+            "tshirt"
+          ],
+          [
+            "Jeans",
+            "jeans"
+          ]
+        ]
+      },
+      "brand": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 5,
+        "unique_after_trim_lower": 5,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "text",
+        "injection_like_values": 0,
+        "sample_values": [
+          "Lumo",
+          "UrbanFit",
+          "Veda",
+          "Kaveri",
+          "NorthPeak"
+        ],
+        "distinct_values": [
+          "Kaveri",
+          "Lumo",
+          "NorthPeak",
+          "UrbanFit",
+          "Veda"
+        ]
+      },
+      "price": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 14,
+        "unique_after_trim_lower": 14,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "numeric",
+        "parse_failures": 0,
+        "parse_failure_examples": [],
+        "numeric_with_symbols": 8,
+        "stats": {
+          "min": 499.0,
+          "max": 2999.0,
+          "mean": 1815.28,
+          "median": 1599.0,
+          "negatives": 0,
+          "zeros": 0
+        }
+      },
+      "cost": {
+        "null_count": 4,
+        "null_pct": 9.3,
+        "all_null": false,
+        "unique_count": 35,
+        "unique_after_trim_lower": 35,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "numeric",
+        "parse_failures": 0,
+        "parse_failure_examples": [],
+        "numeric_with_symbols": 0,
+        "stats": {
+          "min": 233.0,
+          "max": 2051.0,
+          "mean": 972.77,
+          "median": 997.0,
+          "negatives": 0,
+          "zeros": 0
+        }
+      }
+    }
+  },
+  "issues": [
+    {
+      "id": "ISS:products:_dataset:DUPLICATE_ROWS",
+      "dataset": "products",
+      "column": null,
+      "type": "DUPLICATE_ROWS",
+      "severity": "medium",
+      "affected_count": 3,
+      "message": "3 rows are exact copies of another row.",
+      "evidence": {}
+    },
+    {
+      "id": "ISS:products:category:SPELLING_VARIANTS",
+      "dataset": "products",
+      "column": "category",
+      "type": "SPELLING_VARIANTS",
+      "severity": "medium",
+      "affected_count": 5,
+      "message": "Same value written in different ways (case, spaces or punctuation).",
+      "evidence": {
+        "groups": [
+          [
+            "Jacket",
+            "jacket"
+          ],
+          [
+            "Shoes",
+            "shoes"
+          ],
+          [
+            "Dress",
+            "dress"
+          ],
+          [
+            "T Shirt",
+            "T-Shirt",
+            "tshirt"
+          ],
+          [
+            "Jeans",
+            "jeans"
+          ]
+        ],
+        "case_or_space_only": false
+      }
+    },
+    {
+      "id": "ISS:products:cost:MISSING_VALUES",
+      "dataset": "products",
+      "column": "cost",
+      "type": "MISSING_VALUES",
+      "severity": "low",
+      "affected_count": 4,
+      "message": "4 empty values (9.3%).",
+      "evidence": {
+        "null_pct": 9.3
+      }
+    },
+    {
+      "id": "ISS:products:price:NUMBERS_AS_TEXT",
+      "dataset": "products",
+      "column": "price",
+      "type": "NUMBERS_AS_TEXT",
+      "severity": "low",
+      "affected_count": 8,
+      "message": "Numbers written with currency signs or commas.",
+      "evidence": {}
+    },
+    {
+      "id": "ISS:products:product_name:INJECTION_TEXT",
+      "dataset": "products",
+      "column": "product_name",
+      "type": "INJECTION_TEXT",
+      "severity": "high",
+      "affected_count": 1,
+      "message": "Text that looks like instructions to an AI. It will be kept as plain data.",
+      "evidence": {}
+    },
+    {
+      "id": "ISS:products:product_name:WHITESPACE",
+      "dataset": "products",
+      "column": "product_name",
+      "type": "WHITESPACE",
+      "severity": "low",
+      "affected_count": 13,
+      "message": "Extra spaces at the edges or inside values.",
+      "evidence": {
+        "edge": 13,
+        "double": 13
+      }
+    },
+    {
+      "id": "ISS:products:sku:MIXED_ID_FORMAT",
+      "dataset": "products",
+      "column": "sku",
+      "type": "MIXED_ID_FORMAT",
+      "severity": "low",
+      "affected_count": 43,
+      "message": "Codes written in more than one format.",
+      "evidence": {
+        "patterns": {
+          "A-9": 35,
+          "a-9": 4,
+          "a9": 3,
+          "A9": 1
+        }
+      }
+    },
+    {
+      "id": "ISS:products:sku:WHITESPACE",
+      "dataset": "products",
+      "column": "sku",
+      "type": "WHITESPACE",
+      "severity": "low",
+      "affected_count": 4,
+      "message": "Extra spaces at the edges or inside values.",
+      "evidence": {
+        "edge": 4,
+        "double": 0
+      }
+    }
+  ],
+  "cleaning_plan": [
+    {
+      "step_id": "STEP:products:sku:trim_whitespace",
+      "order": 1,
+      "phase": "whitespace",
+      "dataset": "products",
+      "columns": [
+        "sku"
+      ],
+      "action": "trim_whitespace",
+      "reason": "Remove spaces at the start and end, and collapse double spaces.",
+      "risk": "low",
+      "source": "code",
+      "status": "planned",
+      "issue_ids": [
+        "ISS:products:sku:WHITESPACE"
+      ],
+      "params": {},
+      "expected_rows_removed": {
+        "min": 0,
+        "max": 0
+      },
+      "confidence": null,
+      "review_note": null
+    },
+    {
+      "step_id": "STEP:products:product_name:trim_whitespace",
+      "order": 2,
+      "phase": "whitespace",
+      "dataset": "products",
+      "columns": [
+        "product_name"
+      ],
+      "action": "trim_whitespace",
+      "reason": "Remove spaces at the start and end, and collapse double spaces.",
+      "risk": "low",
+      "source": "code",
+      "status": "planned",
+      "issue_ids": [
+        "ISS:products:product_name:WHITESPACE"
+      ],
+      "params": {},
+      "expected_rows_removed": {
+        "min": 0,
+        "max": 0
+      },
+      "confidence": null,
+      "review_note": null
+    },
+    {
+      "step_id": "STEP:products:price:strip_currency_and_commas",
+      "order": 3,
+      "phase": "numbers",
+      "dataset": "products",
+      "columns": [
+        "price"
+      ],
+      "action": "strip_currency_and_commas",
+      "reason": "8 numbers have 'Rs.', a currency sign or commas. Only the symbols are removed; the number is unchanged.",
+      "risk": "low",
+      "source": "code",
+      "status": "planned",
+      "issue_ids": [
+        "ISS:products:price:NUMBERS_AS_TEXT"
+      ],
+      "params": {},
+      "expected_rows_removed": {
+        "min": 0,
+        "max": 0
+      },
+      "confidence": null,
+      "review_note": null
+    },
+    {
+      "step_id": "STEP:products:category:canonicalize_spelling_variants",
+      "order": 4,
+      "phase": "variants",
+      "dataset": "products",
+      "columns": [
+        "category"
+      ],
+      "action": "canonicalize_spelling_variants",
+      "reason": "Different spellings of the same value are merged into the most common one (ties: Title Case, then alphabetical).",
+      "risk": "medium",
+      "source": "code",
+      "status": "planned",
+      "issue_ids": [
+        "ISS:products:category:SPELLING_VARIANTS"
+      ],
+      "params": {
+        "rule": "most_frequent_spelling"
+      },
+      "expected_rows_removed": {
+        "min": 0,
+        "max": 0
+      },
+      "confidence": null,
+      "review_note": null
+    },
+    {
+      "step_id": "STEP:products:sku:normalize_id_format",
+      "order": 5,
+      "phase": "ids",
+      "dataset": "products",
+      "columns": [
+        "sku"
+      ],
+      "action": "normalize_id_format",
+      "reason": "Codes use 4 formats. All are rewritten to the most common one (A-9).",
+      "risk": "medium",
+      "source": "code",
+      "status": "planned",
+      "issue_ids": [
+        "ISS:products:sku:MIXED_ID_FORMAT"
+      ],
+      "params": {
+        "dominant_pattern": "A-9"
+      },
+      "expected_rows_removed": {
+        "min": 0,
+        "max": 0
+      },
+      "confidence": null,
+      "review_note": null
+    },
+    {
+      "step_id": "STEP:products:*:drop_exact_duplicates",
+      "order": 6,
+      "phase": "duplicates",
+      "dataset": "products",
+      "columns": [
+        "*"
+      ],
+      "action": "drop_exact_duplicates",
+      "reason": "Remove 3 exact copies (the first copy is kept).",
+      "risk": "low",
+      "source": "code",
+      "status": "planned",
+      "issue_ids": [
+        "ISS:products:_dataset:DUPLICATE_ROWS"
+      ],
+      "params": {},
+      "expected_rows_removed": {
+        "min": 3,
+        "max": 3
+      },
+      "confidence": null,
+      "review_note": null
+    },
+    {
+      "step_id": "STEP:products:cost:leave_missing",
+      "order": 7,
+      "phase": "missing",
+      "dataset": "products",
+      "columns": [
+        "cost"
+      ],
+      "action": "leave_missing",
+      "reason": "4 empty values. There is no safe way to invent them, so they stay empty.",
+      "risk": "low",
+      "source": "code",
+      "status": "skipped",
+      "issue_ids": [
+        "ISS:products:cost:MISSING_VALUES"
+      ],
+      "params": {},
+      "expected_rows_removed": {
+        "min": 0,
+        "max": 0
+      },
+      "confidence": null,
+      "review_note": null
+    },
+    {
+      "step_id": "STEP:products:product_name:treat_as_data",
+      "order": 8,
+      "phase": "security",
+      "dataset": "products",
+      "columns": [
+        "product_name"
+      ],
+      "action": "treat_as_data",
+      "reason": "1 value(s) look like instructions to an AI. They are kept as plain text and never obeyed.",
+      "risk": "high",
+      "source": "code",
+      "status": "skipped",
+      "issue_ids": [
+        "ISS:products:product_name:INJECTION_TEXT"
+      ],
+      "params": {},
+      "expected_rows_removed": {
+        "min": 0,
+        "max": 0
+      },
+      "confidence": null,
+      "review_note": "Excluded from any text sent to a model."
+    }
+  ],
+  "change_log": [
+    {
+      "step_id": "STEP:products:sku:trim_whitespace",
+      "order": 1,
+      "action": "trim_whitespace",
+      "columns": [
+        "sku"
+      ],
+      "rows_before": 43,
+      "rows_after": 43,
+      "cells_changed": 4,
+      "details": {
+        "samples": {
+          "sku": [
+            {
+              "row": 6,
+              "before": "sku-0006 ",
+              "after": "sku-0006"
+            },
+            {
+              "row": 16,
+              "before": "sku-0016 ",
+              "after": "sku-0016"
+            },
+            {
+              "row": 24,
+              "before": "sku-0024 ",
+              "after": "sku-0024"
+            }
+          ]
+        }
+      },
+      "status": "applied"
+    },
+    {
+      "step_id": "STEP:products:product_name:trim_whitespace",
+      "order": 2,
+      "action": "trim_whitespace",
+      "columns": [
+        "product_name"
+      ],
+      "rows_before": 43,
+      "rows_after": 43,
+      "cells_changed": 13,
+      "details": {
+        "samples": {
+          "product_name": [
+            {
+              "row": 1,
+              "before": "  Slim  T-Shirt 1 ",
+              "after": "Slim T-Shirt 1"
+            },
+            {
+              "row": 4,
+              "before": "  Casual  Shoes 4 ",
+              "after": "Casual Shoes 4"
+            },
+            {
+              "row": 13,
+              "before": "  Premium  Jacket 13 ",
+              "after": "Premium Jacket 13"
+            }
+          ]
+        }
+      },
+      "status": "applied"
+    },
+    {
+      "step_id": "STEP:products:price:strip_currency_and_commas",
+      "order": 3,
+      "action": "strip_currency_and_commas",
+      "columns": [
+        "price"
+      ],
+      "rows_before": 43,
+      "rows_after": 43,
+      "cells_changed": 8,
+      "details": {
+        "samples": {
+          "price": [
+            {
+              "row": 1,
+              "before": "Rs. 1,299",
+              "after": "1299"
+            },
+            {
+              "row": 5,
+              "before": "Rs. 2,999",
+              "after": "2999"
+            },
+            {
+              "row": 7,
+              "before": "Rs. 1,999",
+              "after": "1999"
+            }
+          ]
+        }
+      },
+      "status": "applied"
+    },
+    {
+      "step_id": "STEP:products:category:canonicalize_spelling_variants",
+      "order": 4,
+      "action": "canonicalize_spelling_variants",
+      "columns": [
+        "category"
+      ],
+      "rows_before": 43,
+      "rows_after": 43,
+      "cells_changed": 10,
+      "details": {
+        "merged": [
+          {
+            "from": "jacket",
+            "to": "Jacket"
+          },
+          {
+            "from": "Shoes",
+            "to": "shoes"
+          },
+          {
+            "from": "dress",
+            "to": "Dress"
+          },
+          {
+            "from": "jeans",
+            "to": "Jeans"
+          },
+          {
+            "from": "T Shirt",
+            "to": "T-Shirt"
+          },
+          {
+            "from": "tshirt",
+            "to": "T-Shirt"
+          }
+        ],
+        "samples": {
+          "category": [
+            {
+              "row": 6,
+              "before": "tshirt",
+              "after": "T-Shirt"
+            },
+            {
+              "row": 14,
+              "before": "Shoes",
+              "after": "shoes"
+            },
+            {
+              "row": 16,
+              "before": "T Shirt",
+              "after": "T-Shirt"
+            }
+          ]
+        }
+      },
+      "status": "applied"
+    },
+    {
+      "step_id": "STEP:products:sku:normalize_id_format",
+      "order": 5,
+      "action": "normalize_id_format",
+      "columns": [
+        "sku"
+      ],
+      "rows_before": 43,
+      "rows_after": 43,
+      "cells_changed": 8,
+      "details": {
+        "samples": {
+          "sku": [
+            {
+              "row": 6,
+              "before": "sku-0006",
+              "after": "SKU-0006"
+            },
+            {
+              "row": 7,
+              "before": "sku0007",
+              "after": "SKU-0007"
+            },
+            {
+              "row": 13,
+              "before": "sku0013",
+              "after": "SKU-0013"
+            }
+          ]
+        }
+      },
+      "status": "applied"
+    },
+    {
+      "step_id": "STEP:products:*:drop_exact_duplicates",
+      "order": 6,
+      "action": "drop_exact_duplicates",
+      "columns": [
+        "*"
+      ],
+      "rows_before": 43,
+      "rows_after": 40,
+      "cells_changed": 0,
+      "details": {
+        "rows_removed": 3,
+        "removed_source_rows": [
+          41,
+          42,
+          43
+        ]
+      },
+      "status": "applied"
+    },
+    {
+      "step_id": "STEP:products:cost:leave_missing",
+      "order": 7,
+      "action": "leave_missing",
+      "columns": [
+        "cost"
+      ],
+      "rows_before": 40,
+      "rows_after": 40,
+      "cells_changed": 0,
+      "details": {},
+      "status": "skipped"
+    },
+    {
+      "step_id": "STEP:products:product_name:treat_as_data",
+      "order": 8,
+      "action": "treat_as_data",
+      "columns": [
+        "product_name"
+      ],
+      "rows_before": 40,
+      "rows_after": 40,
+      "cells_changed": 0,
+      "details": {},
+      "status": "skipped"
+    }
+  ],
+  "profile_after": {
+    "meta": {
+      "file_name": "products_clean.csv"
+    },
+    "row_count": 40,
+    "column_count": 7,
+    "column_names": [
+      "product_id",
+      "sku",
+      "product_name",
+      "category",
+      "brand",
+      "price",
+      "cost"
+    ],
+    "header_issues": [],
+    "duplicates": {
+      "exact_duplicate_rows": 0,
+      "extra_after_trim_and_lowercase": 0,
+      "key": {
+        "column": "product_id",
+        "repeated_key_rows": 0,
+        "conflicting_key_rows": 0
+      }
+    },
+    "columns": {
+      "product_id": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 40,
+        "unique_after_trim_lower": 40,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "text",
+        "injection_like_values": 0,
+        "sample_values": [
+          "P001",
+          "P002",
+          "P003",
+          "P004",
+          "P005"
+        ]
+      },
+      "sku": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 40,
+        "unique_after_trim_lower": 40,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "text",
+        "injection_like_values": 0,
+        "sample_values": [
+          "SKU-0001",
+          "SKU-0002",
+          "SKU-0003",
+          "SKU-0004",
+          "SKU-0005"
+        ]
+      },
+      "product_name": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 40,
+        "unique_after_trim_lower": 40,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "text",
+        "injection_like_values": 1,
+        "injection_like_rows": [
+          7
+        ],
+        "sample_values": [
+          "Slim T-Shirt 1",
+          "Classic Jeans 2",
+          "Classic Jacket 3",
+          "Casual Shoes 4",
+          "Classic Dress 5"
+        ]
+      },
+      "category": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 10,
+        "unique_after_trim_lower": 10,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "text",
+        "injection_like_values": 0,
+        "sample_values": [
+          "Tee",
+          "Denim",
+          "Jacket",
+          "shoes",
+          "Dress"
+        ],
+        "distinct_values": [
+          "Denim",
+          "Dress",
+          "Dresses",
+          "Footwear",
+          "Jacket",
+          "Jackets",
+          "Jeans",
+          "T-Shirt",
+          "Tee",
+          "shoes"
+        ]
+      },
+      "brand": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 5,
+        "unique_after_trim_lower": 5,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "text",
+        "injection_like_values": 0,
+        "sample_values": [
+          "Lumo",
+          "UrbanFit",
+          "Veda",
+          "Kaveri",
+          "NorthPeak"
+        ],
+        "distinct_values": [
+          "Kaveri",
+          "Lumo",
+          "NorthPeak",
+          "UrbanFit",
+          "Veda"
+        ]
+      },
+      "price": {
+        "null_count": 0,
+        "null_pct": 0.0,
+        "all_null": false,
+        "unique_count": 8,
+        "unique_after_trim_lower": 8,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "numeric",
+        "parse_failures": 0,
+        "parse_failure_examples": [],
+        "numeric_with_symbols": 0,
+        "stats": {
+          "min": 499.0,
+          "max": 2999.0,
+          "mean": 1804.0,
+          "median": 1599.0,
+          "negatives": 0,
+          "zeros": 0
+        }
+      },
+      "cost": {
+        "null_count": 4,
+        "null_pct": 10.0,
+        "all_null": false,
+        "unique_count": 35,
+        "unique_after_trim_lower": 35,
+        "values_with_edge_spaces": 0,
+        "values_with_double_spaces": 0,
+        "pii_suspected": false,
+        "kind": "numeric",
+        "parse_failures": 0,
+        "parse_failure_examples": [],
+        "numeric_with_symbols": 0,
+        "stats": {
+          "min": 233.0,
+          "max": 2051.0,
+          "mean": 965.33,
+          "median": 1002.5,
+          "negatives": 0,
+          "zeros": 0
+        }
+      }
+    }
+  },
+  "issues_after": [
+    {
+      "id": "ISS:products:cost:MISSING_VALUES",
+      "dataset": "products",
+      "column": "cost",
+      "type": "MISSING_VALUES",
+      "severity": "low",
+      "affected_count": 4,
+      "message": "4 empty values (10.0%).",
+      "evidence": {
+        "null_pct": 10.0
+      }
+    },
+    {
+      "id": "ISS:products:product_name:INJECTION_TEXT",
+      "dataset": "products",
+      "column": "product_name",
+      "type": "INJECTION_TEXT",
+      "severity": "high",
+      "affected_count": 1,
+      "message": "Text that looks like instructions to an AI. It will be kept as plain data.",
+      "evidence": {}
+    }
+  ],
+  "validation": {
+    "passed": true,
+    "checks": {
+      "schema_unchanged": true,
+      "rows_as_planned": true,
+      "rows_are_survivors": true,
+      "untouched_columns_identical": true,
+      "no_failed_steps": true,
+      "no_unexpected_issues": true,
+      "idempotent": true
+    },
+    "rows": {
+      "before": 43,
+      "after": 40,
+      "removed": 3,
+      "allowed_removed_min": 3,
+      "allowed_removed_max": 3
+    },
+    "columns": {
+      "before": 7,
+      "after": 7
+    },
+    "failed_steps": [],
+    "unexpected_issue_ids": [],
+    "left_for_review": [
+      "ISS:products:cost:MISSING_VALUES",
+      "ISS:products:product_name:INJECTION_TEXT"
+    ],
+    "second_pass_changing_steps": []
+  },
+  "artifacts": {
+    "original": "data\\sample\\products.csv",
+    "original_sha256": "937c31b03c1a37849efb691afa7096f19d70f6b71fa712980460f297b1a85b00",
+    "cleaned": "data\\cleaned\\products_clean.csv",
+    "cleaned_sha256": "b6bca86b1eff87033967ced9a38f566895c43c3e0853cf1cfbf4a53fa2d22c53"
+  }
+}
