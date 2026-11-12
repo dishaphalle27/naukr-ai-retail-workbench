@@ -19,365 +19,169 @@ Use in terminal:
 import json
 import re
 import sys
-from datetime import date, datetime
 from pathlib import Path
-
 import pandas as pd
 
-from app.errors import DataLoadError
+WORD_NUMBERS = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"}
 
-# ----------------------------------------------------------------- settings
-MAX_FILE_MB = 50                 # refuse bigger files (protects memory)
-MAX_EXAMPLES = 5                 # never put more than this many examples in a profile
-MAX_EXAMPLE_LEN = 40             # long text is cut
-MAX_VARIANT_GROUPS = 10
-LOW_CARDINALITY_LIMIT = 60       # "few distinct values" = category-like column
-SMALL_DISTINCT_LIMIT = 12        # list all values if there are this few
-
-NULL_TOKENS = {"", "na", "n/a", "nan", "null", "none", "-"}
-
-# Column names that probably hold personal data -> we never show example values
-PII_NAMES = {"name", "first_name", "last_name", "customer_name", "full_name",
-             "email", "phone", "mobile", "address", "dob"}
-PII_PARTS = ("email", "phone", "mobile", "address")
-
-# Text that tries to give instructions to an AI
-INJECTION_RE = re.compile(
-    r"ignore (?:all )?(?:previous|prior|above)|system prompt|disregard .{0,30}instructions"
-    r"|reveal .{0,30}(?:prompt|secret|key|password)",
-    re.IGNORECASE,
-)
-
-# Known date "shapes" (the look of the text, not yet the meaning)
-DATE_SHAPES = {
-    "YYYY-MM-DD": re.compile(r"^\d{4}-\d{2}-\d{2}$"),
-    "NN/NN/YYYY": re.compile(r"^\d{1,2}/\d{1,2}/\d{4}$"),
-    "NN-NN-YYYY": re.compile(r"^\d{1,2}-\d{1,2}-\d{4}$"),
-    "DD Mon YYYY": re.compile(r"^\d{1,2} [A-Za-z]{3,9} \d{4}$"),
-}
+CATEGORY_ALIASES = {"tee", "tshirt", "t shirt", "t-shirt", "denim", "jackets", "footwear", "dresses"}
+CITY_ALIASES = {"bangalore", "bombay"}
 
 
-# ------------------------------------------------------------------ loading
-def load_csv(path, max_mb=MAX_FILE_MB):
-    """Read a CSV as text. Returns (DataFrame, meta). Raises DataLoadError."""
-    path = Path(path)
-    if not path.exists() or not path.is_file():
-        raise DataLoadError("FILE_NOT_FOUND", f"File not found: {path.name}")
-    if path.suffix.lower() != ".csv":
-        raise DataLoadError("BAD_FILE_TYPE", "Only .csv files are accepted",
-                            {"file_name": path.name})
-    size = path.stat().st_size
-    if size > max_mb * 1024 * 1024:
-        raise DataLoadError("FILE_TOO_LARGE", f"File is larger than {max_mb} MB",
-                            {"size_bytes": size})
-    if size == 0:
-        raise DataLoadError("EMPTY_FILE", "File is empty (no header row)")
+def build_cleaning_plan(file_path: str) -> dict:
+    """Scans a messy CSV and creates a step-by-step cleaning plan before changing data."""
+    path = Path(file_path)
+    # Read everything as plain text first so nothing is altered automatically
+    df = pd.read_csv(path, dtype=str, keep_default_na=False)
 
-    meta = {"file_name": path.name, "size_bytes": size, "encoding": "utf-8",
-            "encoding_fallback": False}
-    options = dict(dtype=str, keep_default_na=False)
-    try:
-        try:
-            df = pd.read_csv(path, encoding="utf-8-sig", **options)
-        except UnicodeDecodeError:
-            df = pd.read_csv(path, encoding="latin-1", **options)
-            meta["encoding"] = "latin-1"
-            meta["encoding_fallback"] = True
-    except pd.errors.EmptyDataError:
-        raise DataLoadError("EMPTY_FILE", "File has no readable header row")
-    except pd.errors.ParserError as exc:
-        # We do NOT skip bad lines: that would silently lose rows.
-        raise DataLoadError("MALFORMED_CSV", "CSV structure is broken", {"detail": str(exc)[:200]})
-    return df, meta
+    plan = []
 
+    # 1. Exact duplicate rows
+    dup_count = int(df.duplicated().sum())
+    if dup_count > 0:
+        plan.append({
+            "id": "STEP_01_REMOVE_DUPLICATES",
+            "reason": f"Found {dup_count} exact duplicate rows that would inflate totals.",
+            "affected_fields": ["all_columns"],
+            "risk": "low",
+            "source": "code",
+            "status": "pending"
+        })
 
-# ------------------------------------------------------------ small helpers
-def _pct(part, total):
-    return round(100.0 * part / total, 2) if total else 0.0
-
-
-def _cut(text):
-    text = str(text)
-    return text if len(text) <= MAX_EXAMPLE_LEN else text[:MAX_EXAMPLE_LEN] + "..."
-
-
-def _is_pii_column(name):
-    low = str(name).strip().lower()
-    return low in PII_NAMES or any(part in low for part in PII_PARTS)
-
-
-def _null_mask(series):
-    return series.str.strip().str.lower().isin(NULL_TOKENS)
-
-
-def _valid_date(y, m, d):
-    try:
-        date(y, m, d)
-        return True
-    except ValueError:
-        return False
-
-
-def _date_shape(value):
-    for name, rx in DATE_SHAPES.items():
-        if rx.match(value):
-            return name
-    return None
-
-
-def _check_date(value, shape):
-    """Returns (is_real_calendar_date, is_ambiguous_day_month)."""
-    try:
-        if shape == "YYYY-MM-DD":
-            datetime.strptime(value, "%Y-%m-%d")
-            return True, False
-        if shape == "DD Mon YYYY":
-            for fmt in ("%d %b %Y", "%d %B %Y"):
-                try:
-                    datetime.strptime(value, fmt)
-                    return True, False
-                except ValueError:
-                    pass
-            return False, False
-        sep = "/" if shape == "NN/NN/YYYY" else "-"
-        a, b, y = (int(x) for x in value.split(sep))
-        as_day_first = _valid_date(y, b, a)     # a = day, b = month
-        as_month_first = _valid_date(y, a, b)   # a = month, b = day
-        ambiguous = as_day_first and as_month_first and a != b
-        return (as_day_first or as_month_first), ambiguous
-    except ValueError:
-        return False, False
-
-
-def _profile_dates(values):
-    """values = non-null stripped text. Counts date shapes without parsing to dates."""
-    formats, matched, invalid, ambiguous = {}, 0, 0, 0
-    for raw, n in values.value_counts().items():
-        shape = _date_shape(raw)
-        if shape is None:
-            continue
-        matched += n
-        formats[shape] = formats.get(shape, 0) + int(n)
-        ok, amb = _check_date(raw, shape)
-        if not ok:
-            invalid += int(n)
-        if amb:
-            ambiguous += int(n)
-    return {"matched": int(matched), "formats": formats,
-            "invalid_calendar_dates": invalid, "ambiguous_day_month": ambiguous}
-
-
-def _to_number(stripped):
-    """Turn 'Rs. 1,299' into 1299. Returns (parsed, plain_parsed)."""
-    plain = pd.to_numeric(stripped, errors="coerce")
-    cleaned = (stripped.str.replace(r"(?i)^\s*(?:rs\.?|inr|₹|\$)\s*", "", regex=True)
-                       .str.replace(",", "", regex=False).str.strip())
-    return pd.to_numeric(cleaned, errors="coerce"), plain
-
-
-def _spelling_variants(values):
-    """Groups of different spellings of the same thing: 'West', 'west ', 'WEST'."""
-    groups = {}
-    for raw in values.unique():
-        key = re.sub(r"[^a-z0-9]", "", raw.lower())
-        if key:
-            groups.setdefault(key, set()).add(raw)
-    found = [sorted(raws)[:6] for raws in groups.values() if len(raws) > 1]
-    return [[_cut(r) for r in g] for g in found[:MAX_VARIANT_GROUPS]]
-
-
-def _shape(value):
-    return re.sub(r"\d", "9", re.sub(r"[A-Za-z]", "A", value.strip()))
-
-
-# ---------------------------------------------------------- column profile
-def profile_column(name, series):
-    total = len(series)
-    null_mask = _null_mask(series) if total else pd.Series([], dtype=bool)
-    nulls = int(null_mask.sum())
-    values = series[~null_mask] if total else series
-    stripped = values.str.strip()
-    non_null = len(values)
-    pii = _is_pii_column(name)
-
-    prof = {
-        "null_count": nulls,
-        "null_pct": _pct(nulls, total),
-        "all_null": bool(total > 0 and nulls == total),
-        "unique_count": int(values.nunique()),
-        "unique_after_trim_lower": int(stripped.str.lower().nunique()),
-        "values_with_edge_spaces": int((values != stripped).sum()),
-        "values_with_double_spaces": int(values.str.contains(r"\s{2,}", regex=True).sum()),
-        "pii_suspected": pii,
-    }
-
-    if non_null == 0:
-        prof["kind"] = "empty"
-        return prof
-
-    dates = _profile_dates(stripped)
-    numbers, plain = _to_number(stripped)
-    numeric_ok = numbers.notna()
-    date_share = dates["matched"] / non_null
-    numeric_share = float(numeric_ok.mean())
-
-    if date_share >= 0.5:
-        prof["kind"] = "date"
-        prof["date_formats"] = dates["formats"]
-        prof["mixed_date_formats"] = len(dates["formats"]) > 1
-        prof["ambiguous_day_month"] = dates["ambiguous_day_month"]
-        prof["unparsable_count"] = int(non_null - dates["matched"] + dates["invalid_calendar_dates"])
-    elif numeric_share >= 0.8:
-        prof["kind"] = "numeric"
-        failed = stripped[~numeric_ok]
-        prof["parse_failures"] = int(len(failed))
-        prof["parse_failure_examples"] = [_cut(v) for v in failed.unique()[:MAX_EXAMPLES]]
-        prof["numeric_with_symbols"] = int((plain.isna() & numeric_ok).sum())
-        good = numbers.dropna()
-        if len(good):
-            prof["stats"] = {
-                "min": float(good.min()), "max": float(good.max()),
-                "mean": round(float(good.mean()), 2), "median": float(good.median()),
-                "negatives": int((good < 0).sum()), "zeros": int((good == 0).sum()),
-            }
-    else:
-        prof["kind"] = "text"
-        inj = stripped.str.contains(INJECTION_RE, regex=True)
-        prof["injection_like_values"] = int(inj.sum())
-        if inj.any():
-            # row numbers only (0-based, among non-null rows). The text is NOT copied.
-            prof["injection_like_rows"] = [int(i) for i in values.index[inj.values][:MAX_EXAMPLES]]
-        safe = stripped[~inj] if inj.any() else stripped
-        if not pii:
-            distinct = safe.unique()
-            prof["sample_values"] = [_cut(v) for v in distinct[:MAX_EXAMPLES]]
-            if len(distinct) <= SMALL_DISTINCT_LIMIT:
-                prof["distinct_values"] = sorted(_cut(v) for v in distinct)
-            if prof["unique_count"] <= LOW_CARDINALITY_LIMIT:
-                variants = _spelling_variants(values[~inj] if inj.any() else values)
-                if variants:
-                    prof["spelling_variants"] = variants
-            # ID-like columns (mostly contain digits): check for mixed formats like SKU-001 / sku001
-            digit_share = float(stripped.str.contains(r"\d", regex=True).mean())
-            if digit_share >= 0.9 and non_null >= 8:
-                shapes = stripped.map(_shape).value_counts()
-                if 2 <= len(shapes) <= 6 and shapes.iloc[0] / non_null >= 0.5:
-                    prof["format_patterns"] = {k: int(v) for k, v in shapes.items()}
-    return prof
-
-
-# ------------------------------------------------------- dataset profile
-def _key_candidate(df):
-    """First *_id column that is almost unique -> probably the row's key."""
+    # 2. Extra whitespace and inconsistent uppercase/lowercase flags or IDs
+    messy_text_cols = []
     for col in df.columns:
-        low = str(col).lower()
-        if low == "id" or low.endswith("_id"):
-            vals = df[col][~_null_mask(df[col])]
-            if len(vals) and vals.nunique() / len(vals) >= 0.9:
-                return col
-    return None
+        has_extra_spaces = df[col].apply(lambda x: x != x.strip() or "  " in x).any()
+        unique_lower = df[col].str.strip().str.lower().nunique()
+        unique_raw = df[col].nunique()
+        is_id_or_flag = col in {"store_id", "region", "returned", "email"}
+        if has_extra_spaces or (is_id_or_flag and unique_lower < unique_raw):
+            messy_text_cols.append(col)
 
+    if messy_text_cols:
+        plan.append({
+            "id": "STEP_02_TRIM_AND_STANDARDIZE_TEXT",
+            "reason": "Found extra spaces or inconsistent uppercase/lowercase values (e.g., 'Yes' vs 'yes', 's01' vs 'S01').",
+            "affected_fields": messy_text_cols,
+            "risk": "low",
+            "source": "code",
+            "status": "pending"
+        })
 
-def profile_dataframe(df, meta=None):
-    df = df.fillna("").astype(str)            # work on text copy; caller's data untouched
-    rows, cols = df.shape
+    # 3. Currency symbols or commas inside money columns (e.g., 'Rs. 1,299')
+    currency_cols = [
+        col for col in df.columns
+        if any(k in col for k in ["price", "revenue", "cost"])
+        and df[col].str.contains(r"Rs\.|,", regex=True).any()
+    ]
+    if currency_cols:
+        plan.append({
+            "id": "STEP_03_CLEAN_CURRENCY_TEXT",
+            "reason": "Found money amounts stored as text with 'Rs.' or commas.",
+            "affected_fields": currency_cols,
+            "risk": "low",
+            "source": "code",
+            "status": "pending"
+        })
 
-    exact = df.duplicated() if rows else pd.Series([], dtype=bool)
-    if rows:
-        normalized = df.apply(lambda c: c.str.strip().str.lower())
-        near = normalized.duplicated()
-    else:
-        near = exact
+    # 4. Numbers written as English words (e.g., 'one', 'two')
+    word_num_cols = [
+        col for col in df.columns
+        if df[col].str.strip().str.lower().isin(WORD_NUMBERS).any()
+    ]
+    if word_num_cols:
+        plan.append({
+            "id": "STEP_04_CONVERT_WORD_NUMBERS",
+            "reason": "Found numbers written as English words ('one', 'two') instead of digits.",
+            "affected_fields": word_num_cols,
+            "risk": "low",
+            "source": "code",
+            "status": "pending"
+        })
 
-    key = _key_candidate(df) if rows else None
-    key_info = None
-    if key:
-        key_nonnull = ~_null_mask(df[key])
-        key_dup = df[key].duplicated() & key_nonnull
-        key_info = {
-            "column": key,
-            "repeated_key_rows": int(key_dup.sum()),
-            "conflicting_key_rows": int((key_dup & ~exact).sum()),   # same id, different content
-        }
+    # 5. Mixed and ambiguous date formats (e.g., 05/01/2026)
+    date_cols = [col for col in df.columns if "date" in col.lower()]
+    if date_cols:
+        has_non_iso = any(
+            not df[col].str.match(r"^\d{4}-\d{2}-\d{2}$").all()
+            for col in date_cols
+        )
+        if has_non_iso:
+            plan.append({
+                "id": "STEP_05_NORMALIZE_DATES_DAY_FIRST",
+                "reason": "Found mixed date formats including ambiguous DD/MM vs MM/DD dates. Policy: parse slash dates as DD/MM/YYYY.",
+                "affected_fields": date_cols,
+                "risk": "medium",
+                "source": "code",
+                "status": "pending"
+            })
 
-    header_issues = [str(c) for c in df.columns if str(c) != str(c).strip() or str(c).startswith("Unnamed")]
+    # 6. Retail SKU formatting variants (e.g., 'sku0001' or 'SKU_0001' -> 'SKU-0001')
+    if "sku" in df.columns:
+        non_standard_sku = not df["sku"].str.strip().str.match(r"^SKU-\d{4}$").all()
+        if non_standard_sku:
+            plan.append({
+                "id": "STEP_06_STANDARDIZE_SKU_FORMAT",
+                "reason": "Found inconsistent SKU formats (missing hyphens or lowercase prefixes). Policy: normalize to 'SKU-XXXX'.",
+                "affected_fields": ["sku"],
+                "risk": "low",
+                "source": "code",
+                "status": "pending"
+            })
+
+    # 7. Retail category or city aliases (e.g., 'Tee' -> 'T-Shirt', 'Bombay' -> 'Mumbai')
+    alias_cols = []
+    if "category" in df.columns and df["category"].str.strip().str.lower().isin(CATEGORY_ALIASES).any():
+        alias_cols.append("category")
+    if "city" in df.columns and df["city"].str.strip().str.lower().isin(CITY_ALIASES).any():
+        alias_cols.append("city")
+
+    if alias_cols:
+        plan.append({
+            "id": "STEP_07_NORMALIZE_RETAIL_ALIASES",
+            "reason": "Found retail category or city aliases (e.g., 'Tee'/'T-Shirt', 'Bombay'/'Mumbai'). Policy: map to canonical names.",
+            "affected_fields": alias_cols,
+            "risk": "low",
+            "source": "code",
+            "status": "pending"
+        })
+
+    # 8. Negative stock values in inventory
+    if "stock_on_hand" in df.columns:
+        has_negative = df["stock_on_hand"].str.strip().str.startswith("-").any()
+        if has_negative:
+            plan.append({
+                "id": "STEP_08_FLAG_NEGATIVE_STOCK",
+                "reason": "Found negative stock_on_hand values. Policy: clamp to 0 and flag for audit instead of deleting rows.",
+                "affected_fields": ["stock_on_hand"],
+                "risk": "medium",
+                "source": "code",
+                "status": "pending"
+            })
+
+    # 9. Empty / missing cells
+    null_cols = [col for col in df.columns if (df[col].str.strip() == "").any()]
+    if null_cols:
+        plan.append({
+            "id": "STEP_09_HANDLE_MISSING_VALUES",
+            "reason": "Found empty cells. Policy: fill missing IDs with 'UNKNOWN' and keep numeric nulls explicit without dropping rows.",
+            "affected_fields": null_cols,
+            "risk": "low",
+            "source": "code",
+            "status": "pending"
+        })
 
     return {
-        "meta": meta or {},
-        "row_count": int(rows),
-        "column_count": int(cols),
-        "column_names": [str(c) for c in df.columns],
-        "header_issues": header_issues,
-        "duplicates": {
-            "exact_duplicate_rows": int(exact.sum()),
-            "extra_after_trim_and_lowercase": int(near.sum() - exact.sum()),
-            "key": key_info,
-        },
-        "columns": {str(c): profile_column(c, df[c]) for c in df.columns},
+        "file": path.name,
+        "total_steps": len(plan),
+        "cleaning_plan": plan
     }
-
-
-def profile_file(path, max_mb=MAX_FILE_MB):
-    df, meta = load_csv(path, max_mb=max_mb)
-    return profile_dataframe(df, meta)
-
-
-# ------------------------------------------------------- human-readable
-def column_notes(col):
-    """Short warnings for one column profile (used by the report)."""
-    notes = []
-    if col.get("all_null"):
-        notes.append("ALL values empty")
-    elif col["null_count"]:
-        notes.append(f"{col['null_count']} empty ({col['null_pct']}%)")
-    if col["values_with_edge_spaces"]:
-        notes.append(f"{col['values_with_edge_spaces']} with leading/trailing spaces")
-    if col.get("mixed_date_formats"):
-        notes.append(f"mixed date formats {col['date_formats']}")
-    if col.get("ambiguous_day_month"):
-        notes.append(f"{col['ambiguous_day_month']} dates could be day/month OR month/day")
-    if col.get("unparsable_count"):
-        notes.append(f"{col['unparsable_count']} unreadable dates")
-    if col.get("numeric_with_symbols"):
-        notes.append(f"{col['numeric_with_symbols']} numbers stored as text (Rs., commas)")
-    if col.get("parse_failures"):
-        notes.append(f"{col['parse_failures']} not numbers, e.g. {col['parse_failure_examples']}")
-    if col.get("stats", {}).get("negatives"):
-        notes.append(f"{col['stats']['negatives']} negative values")
-    if col.get("spelling_variants"):
-        notes.append(f"spelling variants {col['spelling_variants'][:3]}")
-    if col.get("format_patterns"):
-        notes.append(f"mixed ID formats {col['format_patterns']}")
-    if col.get("injection_like_values"):
-        notes.append(f"{col['injection_like_values']} value(s) look like AI instructions (treated as plain data)")
-    return notes
-
-
-def format_report(profile):
-    m = profile["meta"]
-    d = profile["duplicates"]
-    lines = [f"FILE {m.get('file_name', '?')} | {profile['row_count']} rows | "
-             f"{profile['column_count']} columns | encoding {m.get('encoding', '?')}"]
-    lines.append(f"DUPLICATES exact={d['exact_duplicate_rows']} "
-                 f"extra-after-trim/lowercase={d['extra_after_trim_and_lowercase']}")
-    if d["key"]:
-        k = d["key"]
-        lines.append(f"KEY '{k['column']}': {k['repeated_key_rows']} repeated, "
-                     f"{k['conflicting_key_rows']} with conflicting content")
-    for name, col in profile["columns"].items():
-        lines.append(f"  - {name} [{col['kind']}] unique={col['unique_count']}")
-        for note in column_notes(col):
-            lines.append(f"      ! {note}")
-    return "\n".join(lines)
 
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: python -m app.cleaning.profiler <file.csv> [--json]")
+        print("Usage: python -m app.cleaning.planner <path_to_csv>")
         sys.exit(1)
-    try:
-        result = profile_file(sys.argv[1])
-    except DataLoadError as err:
-        print(json.dumps(err.to_dict(), indent=2))
-        sys.exit(2)
-    print(json.dumps(result, indent=2) if "--json" in sys.argv else format_report(result))
+
+    result = build_cleaning_plan(sys.argv[1])
+    print(json.dumps(result, indent=2))
