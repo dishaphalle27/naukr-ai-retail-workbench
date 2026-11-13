@@ -1,0 +1,26 @@
+{
+  "dataset": {
+    "name": "inventory",
+    "rows": 320,
+    "columns": 5,
+    "version": "inventory_retail@838f84dbf4d3",
+    "built_from": "inventory_clean.csv"
+  },
+  "decisions": [],
+  "validation": {
+    "passed": true,
+    "checks": {
+      "rows_unchanged": true,
+      "schema_unchanged": true,
+      "only_rule_columns_changed": true,
+      "changes_match_decisions": true,
+      "idempotent": true
+    },
+    "cells_changed": 0
+  },
+  "artifacts": {
+    "input": "data\\cleaned\\inventory_clean.csv",
+    "retail": "data\\retail\\inventory_retail.csv",
+    "retail_sha256": "838f84dbf4d33c0a7648ef41816e49f691c4d990eb572720b05fcb0efa6c4090"
+  }
+}

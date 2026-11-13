@@ -1,0 +1,53 @@
+{
+  "dataset": {
+    "name": "customers",
+    "rows": 150,
+    "columns": 5,
+    "version": "customers_retail@7ec5bea955c8",
+    "built_from": "customers_clean.csv"
+  },
+  "decisions": [
+    {
+      "decision_id": "NORM:customers:city:Bangalore_1bc99c",
+      "dataset": "customers",
+      "column": "city",
+      "from": "Bangalore",
+      "to": "Bengaluru",
+      "confidence": 0.98,
+      "rule": "alias_table",
+      "why": "older English name of Bengaluru",
+      "source": "code",
+      "status": "applied",
+      "rows_affected": 5
+    },
+    {
+      "decision_id": "NORM:customers:city:Bombay_d26231",
+      "dataset": "customers",
+      "column": "city",
+      "from": "Bombay",
+      "to": "Mumbai",
+      "confidence": 0.98,
+      "rule": "alias_table",
+      "why": "older name of Mumbai",
+      "source": "code",
+      "status": "applied",
+      "rows_affected": 6
+    }
+  ],
+  "validation": {
+    "passed": true,
+    "checks": {
+      "rows_unchanged": true,
+      "schema_unchanged": true,
+      "only_rule_columns_changed": true,
+      "changes_match_decisions": true,
+      "idempotent": true
+    },
+    "cells_changed": 11
+  },
+  "artifacts": {
+    "input": "data\\cleaned\\customers_clean.csv",
+    "retail": "data\\retail\\customers_retail.csv",
+    "retail_sha256": "7ec5bea955c866f2e2619adad892344a5701261e306e3968e8932903afe05d45"
+  }
+}

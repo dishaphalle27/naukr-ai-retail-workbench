@@ -1,0 +1,79 @@
+{
+  "dataset": {
+    "name": "orders",
+    "rows": 1500,
+    "columns": 8,
+    "version": "orders_retail@8a799afb3000",
+    "built_from": "orders_clean.csv"
+  },
+  "decisions": [
+    {
+      "decision_id": "NORM:orders:returned:0_cfcd20",
+      "dataset": "orders",
+      "column": "returned",
+      "from": "0",
+      "to": "N",
+      "confidence": 0.9,
+      "rule": "alias_table",
+      "why": "0 in a returned column means no",
+      "source": "code",
+      "status": "applied",
+      "rows_affected": 169
+    },
+    {
+      "decision_id": "NORM:orders:returned:1_c4ca42",
+      "dataset": "orders",
+      "column": "returned",
+      "from": "1",
+      "to": "Y",
+      "confidence": 0.9,
+      "rule": "alias_table",
+      "why": "1 in a returned column means yes",
+      "source": "code",
+      "status": "applied",
+      "rows_affected": 21
+    },
+    {
+      "decision_id": "NORM:orders:returned:Yes_93cba0",
+      "dataset": "orders",
+      "column": "returned",
+      "from": "Yes",
+      "to": "Y",
+      "confidence": 1.0,
+      "rule": "alias_table",
+      "why": "yes means Y",
+      "source": "code",
+      "status": "applied",
+      "rows_affected": 39
+    },
+    {
+      "decision_id": "NORM:orders:returned:no_7fa3b7",
+      "dataset": "orders",
+      "column": "returned",
+      "from": "no",
+      "to": "N",
+      "confidence": 1.0,
+      "rule": "alias_table",
+      "why": "no means N",
+      "source": "code",
+      "status": "applied",
+      "rows_affected": 347
+    }
+  ],
+  "validation": {
+    "passed": true,
+    "checks": {
+      "rows_unchanged": true,
+      "schema_unchanged": true,
+      "only_rule_columns_changed": true,
+      "changes_match_decisions": true,
+      "idempotent": true
+    },
+    "cells_changed": 576
+  },
+  "artifacts": {
+    "input": "data\\cleaned\\orders_clean.csv",
+    "retail": "data\\retail\\orders_retail.csv",
+    "retail_sha256": "8a799afb3000eb43f1dd1c2249748b2c8e055e10dde83e225bf1adabf273f311"
+  }
+}

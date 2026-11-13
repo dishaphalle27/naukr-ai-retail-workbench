@@ -1,0 +1,26 @@
+{
+  "dataset": {
+    "name": "stores",
+    "rows": 8,
+    "columns": 4,
+    "version": "stores_retail@e53a6736e11a",
+    "built_from": "stores_clean.csv"
+  },
+  "decisions": [],
+  "validation": {
+    "passed": true,
+    "checks": {
+      "rows_unchanged": true,
+      "schema_unchanged": true,
+      "only_rule_columns_changed": true,
+      "changes_match_decisions": true,
+      "idempotent": true
+    },
+    "cells_changed": 0
+  },
+  "artifacts": {
+    "input": "data\\cleaned\\stores_clean.csv",
+    "retail": "data\\retail\\stores_retail.csv",
+    "retail_sha256": "e53a6736e11ae200bae9867695bfc8af096579787f4550b1a1bb39de03e13337"
+  }
+}

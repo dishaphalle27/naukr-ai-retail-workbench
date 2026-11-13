@@ -1,5 +1,20 @@
 """
-PROFILER - looks at a CSV and reports 
+PROFILER - looks at a CSV and reports what is inside. It NEVER changes the data.
+
+Main ideas
+1. We read every column as TEXT. If pandas guessed types, it could silently
+   change "007" into 7 or hide "Rs. 1,299". Text keeps the truth.
+2. The profiler only reports FACTS (counts, formats, examples).
+   Deciding "is this a problem?" is the job of the issue detector (next step).
+3. Personal data (emails, phones...) is never copied into the profile as examples.
+   Text that looks like a prompt injection is counted, never copied.
+
+Use in code / notebook:
+    from app.cleaning.profiler import profile_file
+    profile = profile_file("data/sample/orders.csv")
+
+Use in terminal:
+    python -m app.cleaning.profiler data/sample/orders.csv
 """
 import json
 import re

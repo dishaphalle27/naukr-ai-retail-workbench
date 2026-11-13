@@ -1,0 +1,105 @@
+{
+  "dataset": {
+    "name": "products",
+    "rows": 40,
+    "columns": 7,
+    "version": "products_retail@87f0041194a8",
+    "built_from": "products_clean.csv"
+  },
+  "decisions": [
+    {
+      "decision_id": "NORM:products:category:Denim_26d2ad",
+      "dataset": "products",
+      "column": "category",
+      "from": "Denim",
+      "to": "Jeans",
+      "confidence": 0.75,
+      "rule": "alias_table",
+      "why": "Denim could also mean denim jackets, so a person should confirm",
+      "source": "code",
+      "status": "needs_review",
+      "rows_affected": 3
+    },
+    {
+      "decision_id": "NORM:products:category:Dresses_88efa7",
+      "dataset": "products",
+      "column": "category",
+      "from": "Dresses",
+      "to": "Dress",
+      "confidence": 0.98,
+      "rule": "alias_table",
+      "why": "plural of Dress",
+      "source": "code",
+      "status": "applied",
+      "rows_affected": 2
+    },
+    {
+      "decision_id": "NORM:products:category:Footwear_0dc411",
+      "dataset": "products",
+      "column": "category",
+      "from": "Footwear",
+      "to": "Shoes",
+      "confidence": 0.9,
+      "rule": "alias_table",
+      "why": "Footwear is the broader word for Shoes",
+      "source": "code",
+      "status": "applied",
+      "rows_affected": 1
+    },
+    {
+      "decision_id": "NORM:products:category:Jackets_29d799",
+      "dataset": "products",
+      "column": "category",
+      "from": "Jackets",
+      "to": "Jacket",
+      "confidence": 0.98,
+      "rule": "alias_table",
+      "why": "plural of Jacket",
+      "source": "code",
+      "status": "applied",
+      "rows_affected": 1
+    },
+    {
+      "decision_id": "NORM:products:category:Tee_fd8247",
+      "dataset": "products",
+      "column": "category",
+      "from": "Tee",
+      "to": "T-Shirt",
+      "confidence": 0.95,
+      "rule": "alias_table",
+      "why": "'Tee' is the common short name for a T-Shirt",
+      "source": "code",
+      "status": "applied",
+      "rows_affected": 1
+    },
+    {
+      "decision_id": "NORM:products:category:shoes_b0a8b6",
+      "dataset": "products",
+      "column": "category",
+      "from": "shoes",
+      "to": "Shoes",
+      "confidence": 1.0,
+      "rule": "exact",
+      "why": "same value ignoring case and punctuation",
+      "source": "code",
+      "status": "applied",
+      "rows_affected": 7
+    }
+  ],
+  "validation": {
+    "passed": true,
+    "checks": {
+      "rows_unchanged": true,
+      "schema_unchanged": true,
+      "only_rule_columns_changed": true,
+      "changes_match_decisions": true,
+      "idempotent": true
+    },
+    "cells_changed": 12
+  },
+  "artifacts": {
+    "input": "data\\cleaned\\products_clean.csv",
+    "retail": "data\\retail\\products_retail.csv",
+    "retail_sha256": "87f0041194a86a3247ede04d009c992b6b09a17fc514cffa008dde332ef8d4a9"
+  }
+}
