@@ -67,13 +67,18 @@ class Catalog:
         if not tables:
             raise DataLoadError("NO_DATASETS", f"No *{stage}.csv files found in {folder}")
         join_reports = {}
-        if "orders" in tables and len(tables) > 1:
-            wide, reports, _ = join_orders_wide(tables)
-            tables["orders_wide"] = wide
-            used = ["orders"] + [r["right"] for r in reports]
-            fingerprint = hashlib.sha256("|".join(versions[u] for u in used).encode()).hexdigest()[:12]
-            versions["orders_wide"] = f"orders_wide{stage}@{fingerprint}"
-            join_reports["orders_wide"] = reports
+        # ready-made, pre-checked joined views: orders_wide and inventory_wide
+        for base in ("orders", "inventory"):
+            if base in tables and len(tables) > 1:
+                wide, reports, _ = join_orders_wide(tables, base=base)
+                if not reports:
+                    continue
+                name = f"{base}_wide"
+                tables[name] = wide
+                used = [base] + [r["right"] for r in reports]
+                fingerprint = hashlib.sha256("|".join(versions[u] for u in used).encode()).hexdigest()[:12]
+                versions[name] = f"{name}{stage}@{fingerprint}"
+                join_reports[name] = reports
         return cls(tables, versions, join_reports, stage)
 
     # ---------------------------------------------------------------- lookups
@@ -95,7 +100,7 @@ class Catalog:
         key = (name, col)
         if key not in self._nunique:
             s = self._raw[name][col]
-            self._nunique[key] = int(s[s.astype(str).str.strip() != ""].nunique())
+            self._nunique[key] = int(s[s.notna() & (s.astype(str).str.strip() != "")].nunique())
         return self._nunique[key]
 
     def distinct_values(self, name, col, limit=200):
@@ -103,7 +108,14 @@ class Catalog:
         if self.nunique(name, col) > limit:
             return None
         s = self._raw[name][col]
-        return sorted(s[s.astype(str).str.strip() != ""].astype(str).str.strip().unique())
+        s = s[s.notna() & (s.astype(str).str.strip() != "")]
+        return sorted(str(v).strip() for v in s.unique())
+
+    def table_text(self, name):
+        """A text copy of a plain table, for the insight code. Refuses tables that hold personal data."""
+        if any(i["hidden"] for i in self._cols[name].values()):
+            raise DataLoadError("TABLE_HAS_PERSONAL_DATA", f"{name} is not available in raw form")
+        return self._raw[name].copy()
 
     def row_count(self, name):
         return len(self._raw[name])
