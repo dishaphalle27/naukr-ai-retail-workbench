@@ -10,7 +10,7 @@ Inside the chat:  :plan  :evidence  :trace  :new  :quit
 import json
 import sys
 
-from app.chat.assistant import Assistant
+from app.chat.factory import build_assistant
 from app.chat.catalog import Catalog
 from app.chat.store import ChatStore
 from app.errors import DataLoadError
@@ -44,7 +44,8 @@ def main():
     if "--trace" in sys.argv:
         print(json.dumps(store.trace(arg("--trace")), indent=2))
         return 0
-    assistant = Assistant(catalog, store)
+    assistant, notice = build_assistant(catalog, store)
+    print(notice)
     session = arg("--session") or store.new_session_id()
     if "--ask" in sys.argv:
         reply = assistant.ask(session, arg("--ask"))

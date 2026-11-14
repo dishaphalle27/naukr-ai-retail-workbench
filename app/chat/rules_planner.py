@@ -367,24 +367,45 @@ def _find_dims(work):
     return [(k, p) for _, k, p in dims], work
 
 
-# --------------------------------------------------------------------- main
-def parse_question(question, catalog, state, forced=None):
-    forced = forced or {}
-    state = state or {}
+def unmatched_guard(plan, catalog):
+    """For rankings: leave out rows that have no match in a group column (a pile of unmatched rows is not a real group).
+    Only acts when such rows exist. Adds a visible 'not_null' filter to the plan. Returns (filters_added, note)."""
+    ds = plan["dataset"]
+    have = {f["field"] for f in plan.get("filters", []) if f["op"] in ("eq", "in", "not_null")}
+    auto = [{"field": g, "op": "not_null"} for g in plan.get("group_by", [])
+            if g not in have and g in catalog.columns(ds) and catalog.typed(ds)[g].isna().any()]
+    if not auto:
+        return [], None
+    plan["filters"] = plan.get("filters", []) + auto
+    names = ", ".join(f["field"] for f in auto)
+    return auto, (f"Rows with no match in {names} are left out of rankings (a group of unmatched rows is not a real group). "
+                  "Ask without 'highest' or 'top' to see them.")
+
+
+def normalize_question(question):
+    """Returns (text, low): whitespace-cleaned original and a lowercase version with 'store city' tokens."""
     text = " ".join(question.strip().split())
     low = text.lower()
     low = re.sub(r"\bstore(?:'s)? cit(?:y|ies)\b", "storecity", low)
     low = re.sub(r"\bcustomer(?:'s)? cit(?:y|ies)\b", "customercity", low)
+    return text, low
 
-    # 1. safety screens ----------------------------------------------------------------
+
+def screen(text, low, catalog):
+    """Deterministic checks that run BEFORE any planner (rules or AI).
+    Returns a refuse / insight / command outcome, or None to continue.
+    Injection and personal-data requests are stopped here, so they never reach a model."""
+    # 1. injection and personal data
     if INJECTION_RE.search(low):
-        return _refuse("PROMPT_INJECTION", "I cannot follow instructions that change how I work. I only answer questions about the loaded retail data, using checked calculations.")
+        return _refuse("PROMPT_INJECTION", "I cannot follow instructions that change how I work. I only answer questions about "
+                       "the loaded retail data, using checked calculations.")
     if PII_RE.search(low):
         return _refuse("PERSONAL_DATA", "Personal details such as names, emails, phone numbers and addresses are not available for questions.",
                        ["How many customers are there?", "Customers by city", "Revenue by customer city"])
 
-    # 2. product-health questions ------------------------------------------------------
-    product_ids = {p.lower(): p for p in (catalog.distinct_values("products", "product_id") or [])} if "products" in catalog.datasets else {}
+    # 2. product-health questions
+    product_ids = ({p.lower(): p for p in (catalog.distinct_values("products", "product_id") or [])}
+                   if "products" in catalog.datasets else {})
     mentioned = [product_ids[t] for t in re.findall(r"\bp\d+\b", low) if t in product_ids]
     unknown_ids = [t.upper() for t in re.findall(r"\bp\d+\b", low) if t not in product_ids]
     if (INSIGHT_RE.search(low) or ((mentioned or unknown_ids) and EXPLAIN_RE.search(low))) and not METRIC_WORD_RE.search(low):
@@ -393,19 +414,38 @@ def parse_question(question, catalog, state, forced=None):
         m = re.search(rf"\b(\d+|{NUM_ALT})\b", low)
         return {"kind": "insight", "insight": {"type": "attention", "limit": min(_num(m.group(1)), 20) if m else 5}}
 
-    # 3. things the data does not contain ---------------------------------------------
+    # 3. things the data does not contain, and questions outside the retail data
     for code, pattern, message, suggestions in UNANSWERABLE:
         if re.search(pattern, low):
             return _refuse(code, message, suggestions)
     if RELATIVE_TIME_RE.search(low):
         s = catalog.typed("orders")["order_date"].dropna() if "orders" in catalog.datasets else []
         span = f" The orders in this data run from {s.min()} to {s.max()}." if len(s) else ""
-        return _refuse("RELATIVE_TIME", "I cannot tell what 'last month' or 'recent' means for this data. Please give a month name or dates." + span,
+        return _refuse("RELATIVE_TIME", "I cannot tell what 'last month' or 'recent' means for this data. "
+                       "Please give a month name or dates." + span,
                        ["Revenue in March", "Orders between 2026-02-01 and 2026-02-28"])
     if not DOMAIN_RE.search(low):
-        return _refuse("OUT_OF_SCOPE", "I can only answer questions about the loaded retail data: orders, products, customers, stores and stock.", EXAMPLES[:4])
+        return _refuse("OUT_OF_SCOPE", "I can only answer questions about the loaded retail data: orders, products, "
+                       "customers, stores and stock.", EXAMPLES[:4])
     if CLEAR_RE.search(low):
         return {"kind": "command", "command": "clear_filters"}
+    return None
+
+
+def screen_question(question, catalog):
+    text, low = normalize_question(question)
+    return screen(text, low, catalog)
+
+
+# --------------------------------------------------------------------- main
+def parse_question(question, catalog, state, forced=None):
+    forced = forced or {}
+    state = state or {}
+    text, low = normalize_question(question)
+
+    screened = screen(text, low, catalog)
+    if screened:
+        return screened
 
     followup = bool(FOLLOWUP_RE.search(low)) and bool(state.get("last_plan"))
     notes, work = [], low
@@ -630,15 +670,9 @@ def parse_question(question, catalog, state, forced=None):
 
     auto_filters = []
     if ranking and group_fields:
-        already = {f["field"] for f in filters if f["op"] in ("eq", "in")}
-        for g in group_fields:
-            if g not in already and catalog.typed(ds)[g].isna().any():      # only when there really are unmatched rows
-                auto_filters.append({"field": g, "op": "not_null"})
-        if auto_filters:
-            plan["filters"] = filters + auto_filters
-            notes.append("Rows with no match in " + ", ".join(f["field"] for f in auto_filters) +
-                         " are left out of rankings (a group of unmatched rows is not a real " +
-                         ("category" if len(auto_filters) == 1 else "group") + "). Ask without 'highest' or 'top' to see them.")
+        auto_filters, guard_note = unmatched_guard(plan, catalog)
+        if guard_note:
+            notes.append(guard_note)
     meta = {"labels": labels, "units": units, "ranking": ranking, "notes": notes, "auto_filters": auto_filters,
             "dims": group_fields + ([f"{date_field}_{tb_unit}"] if tb_unit else [])}
     return {"kind": "plan", "plan": plan, "meta": meta}

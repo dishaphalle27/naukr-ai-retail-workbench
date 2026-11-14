@@ -127,6 +127,12 @@ def test_a_new_question_does_not_inherit_old_filters(bot):
     assert rows_of(r)[0]["revenue"] == 1850 and r["plan"]["filters"] == []
 
 
+def test_filters_added_automatically_are_not_remembered_for_follow_ups(bot):
+    r = ask(bot, "Which category has the highest revenue?")
+    assert any(f["op"] == "not_null" for f in r["plan"]["filters"])            # added for this answer only
+    assert bot.store.get_state("s1")["filters"] == []
+
+
 def test_clear_filters(bot):
     ask(bot, "only stores in the West region")
     assert ask(bot, "clear filters")["answer"]["text"].startswith("Filters cleared")

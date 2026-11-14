@@ -88,6 +88,10 @@ class Assistant:
             state["pending"] = None
 
         outcome = self.planner(effective, self.catalog, state, forced)
+        trace["planner"] = outcome.get("source", "rules")
+        if outcome.get("model"):
+            trace["model"], trace["prompt_version"] = outcome["model"], outcome.get("prompt_version")
+        trace["steps"] += outcome.get("planner_steps", [])
         trace["steps"].append(f"Planner result: {outcome['kind']}")
         kind = outcome["kind"]
 
@@ -121,8 +125,8 @@ class Assistant:
                     "refusal": {"code": out["error"]["code"], "message": out["error"]["message"], "suggestions": []},
                     "trace": trace}
         answer = build_answer(out["plan"], out["result"], out["evidence"], meta, out["warnings"])
-        auto = meta.get("auto_filters", [])
-        remembered = [f for f in out["plan"].get("filters", []) if f not in auto]
+        auto = {(f["field"], f["op"]) for f in meta.get("auto_filters", [])}
+        remembered = [f for f in out["plan"].get("filters", []) if (f["field"], f["op"]) not in auto]
         new_state = {**state, "filters": remembered, "metrics": out["plan"].get("metrics"),
                      "labels": meta.get("labels", {}), "units": meta.get("units", {}),
                      "group_by": out["plan"].get("group_by", []), "time_bucket": out["plan"].get("time_bucket"),
