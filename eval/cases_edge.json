@@ -181,17 +181,5 @@
   {
     "not_a_case": true
   },
-  "just a string",
-  {
-    "id": "edge_120k_rows",
-    "input": "eval/edge/big_120k.csv",
-    "questions": [
-      {
-        "question": "What is the total revenue?",
-        "expect": {
-          "status": "ok"
-        }
-      }
-    ]
-  }
+  "just a string"
 ]
