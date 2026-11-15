@@ -163,7 +163,9 @@ def normalize_file(path, out_dir, min_conf=MIN_CONFIDENCE):
         "validation": {"passed": all(checks.values()), "checks": checks, "cells_changed": cells},
         "artifacts": {"input": str(path), "retail": str(out_path), "retail_sha256": _sha(out_path)},
     }
-    (out_dir / f"{base}_retail_report.json").write_text(json.dumps(result, indent=2), encoding="utf-8")
+    portable = {**result, "artifacts": {"input_file": path.name, "retail_file": out_path.name,
+                                        "retail_sha256": result["artifacts"]["retail_sha256"]}}
+    (out_dir / f"{base}_retail_report.json").write_text(json.dumps(portable, indent=2), encoding="utf-8")
     return result
 
 

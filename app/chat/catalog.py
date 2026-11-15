@@ -117,6 +117,15 @@ class Catalog:
             raise DataLoadError("TABLE_HAS_PERSONAL_DATA", f"{name} is not available in raw form")
         return self._raw[name].copy()
 
+    def date_range(self, dataset="orders", column="order_date"):
+        """(first, last) ISO date of a column, or None when the dataset or column does not exist."""
+        if dataset not in self._cols or column not in self._cols[dataset]:
+            return None
+        if self._cols[dataset][column]["kind"] != "date":
+            return None
+        s = self.typed(dataset)[column].dropna()
+        return (s.min(), s.max()) if len(s) else None
+
     def row_count(self, name):
         return len(self._raw[name])
 

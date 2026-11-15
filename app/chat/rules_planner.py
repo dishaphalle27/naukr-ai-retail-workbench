@@ -237,8 +237,8 @@ def _extract_values(work, ds, catalog, forced):
 
 
 def _data_year(catalog):
-    s = catalog.typed("orders")["order_date"].dropna()
-    return int(s.max()[:4]) if len(s) else None
+    span = catalog.date_range()
+    return int(span[1][:4]) if span else None
 
 
 UNKNOWN_VALUE_RE = re.compile(r"\b(?:in|for|at|of|from) (?:the )?([a-z][a-z\-]{2,}) (region|category|brand)\b")
@@ -419,8 +419,8 @@ def screen(text, low, catalog):
         if re.search(pattern, low):
             return _refuse(code, message, suggestions)
     if RELATIVE_TIME_RE.search(low):
-        s = catalog.typed("orders")["order_date"].dropna() if "orders" in catalog.datasets else []
-        span = f" The orders in this data run from {s.min()} to {s.max()}." if len(s) else ""
+        rng = catalog.date_range()
+        span = f" The orders in this data run from {rng[0]} to {rng[1]}." if rng else ""
         return _refuse("RELATIVE_TIME", "I cannot tell what 'last month' or 'recent' means for this data. "
                        "Please give a month name or dates." + span,
                        ["Revenue in March", "Orders between 2026-02-01 and 2026-02-28"])

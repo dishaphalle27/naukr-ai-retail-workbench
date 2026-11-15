@@ -87,24 +87,30 @@ class Assistant:
                 trace["steps"].append("The reply did not match any option, so it was treated as a new question.")
             state["pending"] = None
 
-        outcome = self.planner(effective, self.catalog, state, forced)
-        trace["planner"] = outcome.get("source", "rules")
-        if outcome.get("model"):
-            trace["model"], trace["prompt_version"] = outcome["model"], outcome.get("prompt_version")
-        trace["steps"] += outcome.get("planner_steps", [])
-        trace["steps"].append(f"Planner result: {outcome['kind']}")
-        kind = outcome["kind"]
-
-        if kind == "plan":
-            response = self._run(outcome, state, trace)
-        elif kind == "clarify":
-            response = self._clarify(outcome, state, trace)
-        elif kind == "refuse":
-            response = self._refused(outcome["code"], outcome["message"], outcome["suggestions"], trace)
-        elif kind == "command":
-            response = self._command(outcome, state, trace)
-        else:
-            response = self._insight(outcome["insight"], state, trace)
+        try:
+            outcome = self.planner(effective, self.catalog, state, forced)
+            trace["planner"] = outcome.get("source", "rules")
+            if outcome.get("model"):
+                trace["model"], trace["prompt_version"] = outcome["model"], outcome.get("prompt_version")
+            trace["steps"] += outcome.get("planner_steps", [])
+            trace["steps"].append(f"Planner result: {outcome['kind']}")
+            kind = outcome["kind"]
+            if kind == "plan":
+                response = self._run(outcome, state, trace)
+            elif kind == "clarify":
+                response = self._clarify(outcome, state, trace)
+            elif kind == "refuse":
+                response = self._refused(outcome["code"], outcome["message"], outcome["suggestions"], trace)
+            elif kind == "command":
+                response = self._command(outcome, state, trace)
+            else:
+                response = self._insight(outcome["insight"], state, trace)
+        except Exception as exc:                       # nothing unexpected may escape: answer with a structured error
+            trace["steps"].append(f"Unexpected problem: {type(exc).__name__}")
+            response = {"status": "error", "answer": None, "plan": None, "evidence": None, "warnings": [],
+                        "refusal": {"code": "INTERNAL_ERROR", "message": "I could not answer that safely with this data. "
+                                    "Try a simpler question, or check that the needed columns exist.",
+                                    "suggestions": EXAMPLES[:3]}, "trace": trace}
         new_state = response.pop("_state", state)
         return self._save(session_id, question, response, new_state)
 

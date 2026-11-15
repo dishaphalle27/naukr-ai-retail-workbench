@@ -29,8 +29,10 @@ def plant(kind, n=1):
     planted[kind] = planted.get(kind, 0) + n
 
 
-def write_csv(name, rows):
-    path = OUT_DIR / name
+def write_csv(name, rows, folder=None):
+    folder = folder or OUT_DIR
+    folder.mkdir(parents=True, exist_ok=True)
+    path = folder / name
     with open(path, "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
         writer.writeheader()
@@ -271,6 +273,14 @@ def main():
     write_csv("customers.csv", customers_messy)
     write_csv("orders.csv", orders_messy)
     write_csv("inventory.csv", inventory_messy)
+
+    # The TRUTH: the same data before any mess was added. Used only to build independent
+    # expected answers for the evaluator. (Stock and missing costs cannot be recovered, so
+    # evaluator questions avoid them.)
+    truth_dir = OUT_DIR.parent / "sample_truth"
+    for name, rows in (("stores", stores_clean), ("products", products_clean), ("customers", customers_clean),
+                       ("orders", orders_clean), ("inventory", inventory_clean)):
+        write_csv(f"{name}.csv", rows, truth_dir)
 
     key = {
         "seed": SEED,

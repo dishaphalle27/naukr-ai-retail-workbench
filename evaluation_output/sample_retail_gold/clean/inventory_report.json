@@ -615,9 +615,9 @@
     "second_pass_changing_steps": []
   },
   "artifacts": {
-    "original": "data\\sample\\inventory.csv",
+    "original_file": "inventory.csv",
     "original_sha256": "e02c732cc320ff5db9020c2b90d4b2d7100cf544c2f9c2627a1317f11bb19b88",
-    "cleaned": "data\\cleaned\\inventory_clean.csv",
+    "cleaned_file": "inventory_clean.csv",
     "cleaned_sha256": "838f84dbf4d33c0a7648ef41816e49f691c4d990eb572720b05fcb0efa6c4090"
   }
 }

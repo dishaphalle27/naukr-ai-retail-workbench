@@ -87,8 +87,8 @@ def schema_for_prompt(catalog):
 
 
 def build_system_prompt(catalog):
-    s = catalog.typed("orders")["order_date"].dropna() if "orders" in catalog.datasets else []
-    date_line = f"Orders cover {s.min()} to {s.max()}. A month name without a year means {s.max()[:4]}." if len(s) else ""
+    rng = catalog.date_range()
+    date_line = f"Orders cover {rng[0]} to {rng[1]}. A month name without a year means {rng[1][:4]}." if rng else "There is no order date column."
     named = ", ".join(NAMED_METRICS)
     return f"""You translate ONE user question about a retail dataset into a JSON query plan.
 You do not answer the question. You never write, calculate or guess numbers. You never run anything.

@@ -1,0 +1,197 @@
+[
+  {
+    "id": "edge_header_only",
+    "input": "eval/edge/header_only.csv",
+    "questions": [
+      {
+        "question": "What is the total revenue?",
+        "expect": {
+          "status": "ok"
+        }
+      }
+    ]
+  },
+  {
+    "id": "edge_empty_file",
+    "input": "eval/edge/empty.csv"
+  },
+  {
+    "id": "edge_all_null_column",
+    "input": "eval/edge/all_null_column.csv"
+  },
+  {
+    "id": "edge_malformed_csv",
+    "input": "eval/edge/malformed.csv"
+  },
+  {
+    "id": "edge_latin1_encoding",
+    "input": "eval/edge/latin1.csv"
+  },
+  {
+    "id": "edge_duplicate_identifiers",
+    "input": "eval/edge/duplicate_ids.csv"
+  },
+  {
+    "id": "edge_ambiguous_dates",
+    "input": "eval/edge/ambiguous_dates.csv"
+  },
+  {
+    "id": "edge_single_row",
+    "input": "eval/edge/single_row.csv",
+    "questions": [
+      {
+        "question": "What is the total revenue?",
+        "expect": {
+          "status": "ok"
+        }
+      }
+    ]
+  },
+  {
+    "id": "edge_wrong_file_type",
+    "input": "eval/edge/notes.txt"
+  },
+  {
+    "id": "edge_missing_file",
+    "input": "eval/edge/does_not_exist.csv"
+  },
+  {
+    "id": "edge_injection_in_cell",
+    "datasets": {
+      "products": "eval/edge/injection_cell.csv"
+    },
+    "questions": [
+      {
+        "question": "How many products are there?",
+        "expect": {
+          "status": "ok",
+          "first_row": {
+            "products": 3
+          }
+        }
+      },
+      {
+        "question": "What categories exist?",
+        "expect": {
+          "status": "ok",
+          "row_count": 3
+        }
+      }
+    ]
+  },
+  {
+    "id": "edge_join_fan_out",
+    "datasets": {
+      "orders": "eval/edge/orders_small.csv",
+      "products": "eval/edge/products_dup_key.csv"
+    },
+    "questions": [
+      {
+        "question": "What is the total revenue?",
+        "expect": {
+          "status": "ok",
+          "first_row": {
+            "revenue": 1100
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "edge_missing_join_key",
+    "datasets": {
+      "orders": "eval/edge/orders_no_product_id.csv",
+      "products": "eval/edge/products_small.csv"
+    },
+    "questions": [
+      {
+        "question": "What is the total revenue?",
+        "expect": {
+          "status": "ok",
+          "first_row": {
+            "revenue": 600
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "edge_one_bad_file_one_good",
+    "datasets": {
+      "orders": "eval/edge/orders_small.csv",
+      "products": "eval/edge/empty.csv"
+    },
+    "questions": [
+      {
+        "question": "What is the total revenue?",
+        "expect": {
+          "status": "ok",
+          "first_row": {
+            "revenue": 1100
+          }
+        }
+      },
+      {
+        "question": "What is the profit?",
+        "expect": {
+          "status": "refused",
+          "refusal_code": "NO_PROFIT_DATA"
+        }
+      }
+    ]
+  },
+  {
+    "id": "edge_clean_data_stays_clean",
+    "datasets": {
+      "orders": "eval/edge/orders_small.csv",
+      "products": "eval/edge/products_small.csv"
+    },
+    "questions": [
+      {
+        "question": "Revenue by category",
+        "expect": {
+          "status": "ok",
+          "rows_include": [
+            {
+              "category": "Jeans",
+              "revenue": 800
+            },
+            {
+              "category": "T-Shirt",
+              "revenue": 300
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "../../escape/attempt",
+    "input": "eval/edge/single_row.csv"
+  },
+  {
+    "id": "edge_bad_dataset_name",
+    "datasets": {
+      "../evil": "eval/edge/single_row.csv"
+    }
+  },
+  {
+    "id": "edge_no_data_given"
+  },
+  {
+    "not_a_case": true
+  },
+  "just a string",
+  {
+    "id": "edge_120k_rows",
+    "input": "eval/edge/big_120k.csv",
+    "questions": [
+      {
+        "question": "What is the total revenue?",
+        "expect": {
+          "status": "ok"
+        }
+      }
+    ]
+  }
+]

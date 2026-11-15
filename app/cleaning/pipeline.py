@@ -72,7 +72,10 @@ def clean_file(path, out_dir, dataset_name=None, max_mb=50):
                       "cleaned": str(cleaned_path), "cleaned_sha256": _sha256(cleaned_path)},
     }
     report_path = out_dir / f"{name}_report.json"
-    report_path.write_text(json.dumps(result, indent=2), encoding="utf-8")
+    # The saved report uses file NAMES, not full paths, so the same data gives the same report anywhere.
+    portable = {**result, "artifacts": {"original_file": path.name, "original_sha256": result["artifacts"]["original_sha256"],
+                                        "cleaned_file": cleaned_path.name, "cleaned_sha256": result["artifacts"]["cleaned_sha256"]}}
+    report_path.write_text(json.dumps(portable, indent=2), encoding="utf-8")
     result["artifacts"]["report"] = str(report_path)
     return result
 

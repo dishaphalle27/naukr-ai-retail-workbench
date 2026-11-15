@@ -72,8 +72,8 @@
     "cells_changed": 576
   },
   "artifacts": {
-    "input": "data\\cleaned\\orders_clean.csv",
-    "retail": "data\\retail\\orders_retail.csv",
+    "input_file": "orders_clean.csv",
+    "retail_file": "orders_retail.csv",
     "retail_sha256": "8a799afb3000eb43f1dd1c2249748b2c8e055e10dde83e225bf1adabf273f311"
   }
 }

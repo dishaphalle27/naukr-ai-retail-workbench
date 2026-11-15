@@ -323,3 +323,11 @@ def test_sample_follow_up_chain_and_unmatched_rows(sample_bot):
     assert r["status"] == "ok" and r["evidence"]["rows_after_filters"] < 362
     full = sample_bot.ask("f2", "Revenue by category")
     assert "(no match)" in {x["category"] for x in rows_of(full)}          # orphan P999 orders are visible, not hidden
+
+
+def test_an_unexpected_planner_crash_becomes_a_structured_error(shop):
+    def broken(question, catalog, state, forced=None):
+        raise RuntimeError("secret internal detail")
+    r = Assistant(shop, ChatStore(), planner=broken).ask("s", "anything about revenue")
+    assert r["status"] == "error" and r["refusal"]["code"] == "INTERNAL_ERROR"
+    assert "secret internal detail" not in json.dumps(r)

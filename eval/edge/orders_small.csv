@@ -1,0 +1,5 @@
+order_id,order_date,customer_id,product_id,store_id,quantity,revenue,returned
+O1,2026-01-05,C1,P1,S1,2,200,N
+O2,2026-01-20,C2,P1,S2,1,100,Y
+O3,2026-02-03,C1,P2,S1,3,600,N
+O4,2026-02-10,C3,P2,S2,1,200,Y
