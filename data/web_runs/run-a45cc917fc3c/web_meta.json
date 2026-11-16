@@ -1,0 +1,264 @@
+{
+  "run_id": "run-a45cc917fc3c",
+  "label": "Sample Retail Suite (5 tables)",
+  "created_at": "2026-11-16 03:07:57 UTC",
+  "status": "succeeded",
+  "reused": false,
+  "ok": true,
+  "has_errors": false,
+  "chat_ready": true,
+  "chat_notice": "AI planner is off (LLM_PROVIDER=none). Using the built-in rules planner.",
+  "planner_mode": "rules",
+  "session_id": "6dbafc928e5c",
+  "raw_dir": "data\\runs\\run-a45cc917fc3c\\original",
+  "clean_dir": "data\\runs\\run-a45cc917fc3c\\cleaned",
+  "retail_dir": "data\\runs\\run-a45cc917fc3c\\retail",
+  "db_path": "data\\web_runs\\run-a45cc917fc3c\\chat.db",
+  "cleaned": [
+    {
+      "status": "ok",
+      "dataset": {
+        "name": "customers",
+        "source_file": "customers.csv",
+        "version": "7ec5bea955c8"
+      },
+      "validation": {
+        "rows": {
+          "before": 155,
+          "after": 150
+        },
+        "passed": true,
+        "idempotent": true
+      },
+      "cleaning_plan": [],
+      "profile_before": {
+        "rows": 155
+      },
+      "profile_after": {
+        "rows": 150
+      }
+    },
+    {
+      "status": "ok",
+      "dataset": {
+        "name": "inventory",
+        "source_file": "inventory.csv",
+        "version": "838f84dbf4d3"
+      },
+      "validation": {
+        "rows": {
+          "before": 320,
+          "after": 320
+        },
+        "passed": true,
+        "idempotent": true
+      },
+      "cleaning_plan": [],
+      "profile_before": {
+        "rows": 320
+      },
+      "profile_after": {
+        "rows": 320
+      }
+    },
+    {
+      "status": "ok",
+      "dataset": {
+        "name": "orders",
+        "source_file": "orders.csv",
+        "version": "cd07e2571c60"
+      },
+      "validation": {
+        "rows": {
+          "before": 1512,
+          "after": 1500
+        },
+        "passed": true,
+        "idempotent": true
+      },
+      "cleaning_plan": [],
+      "profile_before": {
+        "rows": 1512
+      },
+      "profile_after": {
+        "rows": 1500
+      }
+    },
+    {
+      "status": "ok",
+      "dataset": {
+        "name": "products",
+        "source_file": "products.csv",
+        "version": "87f0041194a8"
+      },
+      "validation": {
+        "rows": {
+          "before": 43,
+          "after": 40
+        },
+        "passed": true,
+        "idempotent": true
+      },
+      "cleaning_plan": [],
+      "profile_before": {
+        "rows": 43
+      },
+      "profile_after": {
+        "rows": 40
+      }
+    },
+    {
+      "status": "ok",
+      "dataset": {
+        "name": "stores",
+        "source_file": "stores.csv",
+        "version": "e53a6736e11a"
+      },
+      "validation": {
+        "rows": {
+          "before": 8,
+          "after": 8
+        },
+        "passed": true,
+        "idempotent": true
+      },
+      "cleaning_plan": [],
+      "profile_before": {
+        "rows": 8
+      },
+      "profile_after": {
+        "rows": 8
+      }
+    }
+  ],
+  "normalized": [
+    {
+      "status": "ok",
+      "dataset": {
+        "name": "customers",
+        "source_file": "customers.csv",
+        "version": "7ec5bea955c8"
+      },
+      "decisions": []
+    },
+    {
+      "status": "ok",
+      "dataset": {
+        "name": "inventory",
+        "source_file": "inventory.csv",
+        "version": "838f84dbf4d3"
+      },
+      "decisions": []
+    },
+    {
+      "status": "ok",
+      "dataset": {
+        "name": "orders",
+        "source_file": "orders.csv",
+        "version": "cd07e2571c60"
+      },
+      "decisions": []
+    },
+    {
+      "status": "ok",
+      "dataset": {
+        "name": "products",
+        "source_file": "products.csv",
+        "version": "87f0041194a8"
+      },
+      "decisions": []
+    },
+    {
+      "status": "ok",
+      "dataset": {
+        "name": "stores",
+        "source_file": "stores.csv",
+        "version": "e53a6736e11a"
+      },
+      "decisions": []
+    }
+  ],
+  "retail_overview": {
+    "available": true,
+    "total_revenue": 4602503.0,
+    "total_lines": 1500,
+    "distinct_orders": 1500,
+    "aov": 3068.34,
+    "return_rate_pct": 11.7,
+    "low_stock_skus": 134,
+    "category_bars": [
+      {
+        "label": "T-Shirt",
+        "value": 1043568.0,
+        "share_pct": 22.7,
+        "bar_pct": 100.0
+      },
+      {
+        "label": "Jacket",
+        "value": 1009080.0,
+        "share_pct": 21.9,
+        "bar_pct": 96.7
+      },
+      {
+        "label": "Dress",
+        "value": 983186.0,
+        "share_pct": 21.4,
+        "bar_pct": 94.2
+      },
+      {
+        "label": "Shoes",
+        "value": 851919.0,
+        "share_pct": 18.5,
+        "bar_pct": 81.6
+      },
+      {
+        "label": "Jeans",
+        "value": 407134.0,
+        "share_pct": 8.8,
+        "bar_pct": 39.0
+      },
+      {
+        "label": "Denim",
+        "value": 299223.0,
+        "share_pct": 6.5,
+        "bar_pct": 28.7
+      },
+      {
+        "label": "Unmatched / Other",
+        "value": 8393.0,
+        "share_pct": 0.2,
+        "bar_pct": 0.8
+      }
+    ],
+    "region_bars": [
+      {
+        "label": "East",
+        "rate_pct": 13.1,
+        "returns": 51,
+        "lines": 388,
+        "revenue": 1190460.0
+      },
+      {
+        "label": "West",
+        "rate_pct": 12.7,
+        "returns": 46,
+        "lines": 362,
+        "revenue": 1126189.0
+      },
+      {
+        "label": "North",
+        "rate_pct": 11.4,
+        "returns": 42,
+        "lines": 367,
+        "revenue": 1105905.0
+      },
+      {
+        "label": "South",
+        "rate_pct": 9.4,
+        "returns": 36,
+        "lines": 383,
+        "revenue": 1179949.0
+      }
+    ]
+  }
+}

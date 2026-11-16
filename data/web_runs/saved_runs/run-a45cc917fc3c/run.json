@@ -1,0 +1,132 @@
+{
+  "run_id": "run-a45cc917fc3c",
+  "status": "succeeded",
+  "pipeline_version": "1",
+  "created_at": "2026-11-16T03:07:56+00:00",
+  "inputs": [
+    {
+      "file": "customers.csv",
+      "bytes": 9706,
+      "sha256": "97dc64bd8ae58074766958ff9dea6ed13582d3cf880cc38be96d2149fa724d77"
+    },
+    {
+      "file": "inventory.csv",
+      "bytes": 8534,
+      "sha256": "e02c732cc320ff5db9020c2b90d4b2d7100cf544c2f9c2627a1317f11bb19b88"
+    },
+    {
+      "file": "orders.csv",
+      "bytes": 66442,
+      "sha256": "28114c4a0438a24e27db3c54ceafd2307154b44f756ed148667a36882e6e3810"
+    },
+    {
+      "file": "products.csv",
+      "bytes": 2537,
+      "sha256": "937c31b03c1a37849efb691afa7096f19d70f6b71fa712980460f297b1a85b00"
+    },
+    {
+      "file": "stores.csv",
+      "bytes": 347,
+      "sha256": "978db5a9aeb8b177d7c794454defaa6270d040a968ff3b599aa31e3f1dae0d57"
+    }
+  ],
+  "datasets": {
+    "customers": {
+      "rows_before": 155,
+      "rows_after": 150,
+      "columns": 5,
+      "steps": {
+        "applied": 4
+      },
+      "validation_passed": true,
+      "cleaned_version": "customers_clean@2bbcba39f28d",
+      "retail_version": "customers_retail@7ec5bea955c8",
+      "retail_validation_passed": true,
+      "needs_review_decisions": 0
+    },
+    "inventory": {
+      "rows_before": 320,
+      "rows_after": 320,
+      "columns": 5,
+      "steps": {
+        "applied": 2,
+        "needs_review": 1,
+        "skipped": 1
+      },
+      "validation_passed": true,
+      "cleaned_version": "inventory_clean@838f84dbf4d3",
+      "retail_version": "inventory_retail@838f84dbf4d3",
+      "retail_validation_passed": true,
+      "needs_review_decisions": 0
+    },
+    "orders": {
+      "rows_before": 1512,
+      "rows_after": 1500,
+      "columns": 8,
+      "steps": {
+        "applied": 7,
+        "skipped": 1
+      },
+      "validation_passed": true,
+      "cleaned_version": "orders_clean@6ad081bfd113",
+      "retail_version": "orders_retail@cd07e2571c60",
+      "retail_validation_passed": true,
+      "needs_review_decisions": 0
+    },
+    "products": {
+      "rows_before": 43,
+      "rows_after": 40,
+      "columns": 7,
+      "steps": {
+        "applied": 6,
+        "skipped": 2
+      },
+      "validation_passed": true,
+      "cleaned_version": "products_clean@b6bca86b1eff",
+      "retail_version": "products_retail@87f0041194a8",
+      "retail_validation_passed": true,
+      "needs_review_decisions": 1
+    },
+    "stores": {
+      "rows_before": 8,
+      "rows_after": 8,
+      "columns": 4,
+      "steps": {
+        "applied": 2
+      },
+      "validation_passed": true,
+      "cleaned_version": "stores_clean@e53a6736e11a",
+      "retail_version": "stores_retail@e53a6736e11a",
+      "retail_validation_passed": true,
+      "needs_review_decisions": 0
+    }
+  },
+  "errors": [],
+  "artifacts": {
+    "cleaned/customers_clean.csv": "2bbcba39f28d9fb868016b28b243615ea89dee0ffc0c721fdb9ff5fc629fb3e7",
+    "cleaned/customers_report.json": "785d080e32eab2f9a0c13653044e6ac22c89846145c644c640fd1462d39e7222",
+    "cleaned/inventory_clean.csv": "838f84dbf4d33c0a7648ef41816e49f691c4d990eb572720b05fcb0efa6c4090",
+    "cleaned/inventory_report.json": "e2a80fb6c32784864e444508a6d10be72df8945261ab29232e1954616df71b2b",
+    "cleaned/orders_clean.csv": "6ad081bfd113ff6bc86b6cf5c0870f5b023831d632131c67e6fc159829fd612a",
+    "cleaned/orders_report.json": "4abd31b10acbdd3d22d38e73194538ea173085e13d385cfca8ccaa752b144fd0",
+    "cleaned/products_clean.csv": "b6bca86b1eff87033967ced9a38f566895c43c3e0853cf1cfbf4a53fa2d22c53",
+    "cleaned/products_report.json": "d99af3330adfdb6048d1e25a360c475844aefa210ecb94fed14b61d139737a51",
+    "cleaned/stores_clean.csv": "e53a6736e11ae200bae9867695bfc8af096579787f4550b1a1bb39de03e13337",
+    "cleaned/stores_report.json": "61bec521c2063c8083c38c479477f77259c0a1d8c21dc00b1678738478ba74f8",
+    "original/customers.csv": "97dc64bd8ae58074766958ff9dea6ed13582d3cf880cc38be96d2149fa724d77",
+    "original/inventory.csv": "e02c732cc320ff5db9020c2b90d4b2d7100cf544c2f9c2627a1317f11bb19b88",
+    "original/orders.csv": "28114c4a0438a24e27db3c54ceafd2307154b44f756ed148667a36882e6e3810",
+    "original/products.csv": "937c31b03c1a37849efb691afa7096f19d70f6b71fa712980460f297b1a85b00",
+    "original/stores.csv": "978db5a9aeb8b177d7c794454defaa6270d040a968ff3b599aa31e3f1dae0d57",
+    "retail/customers_retail.csv": "7ec5bea955c866f2e2619adad892344a5701261e306e3968e8932903afe05d45",
+    "retail/customers_retail_report.json": "423362f282c8e727a7812a015469b0e5a547b5c15dc7d585c5c8319355573a82",
+    "retail/inventory_retail.csv": "838f84dbf4d33c0a7648ef41816e49f691c4d990eb572720b05fcb0efa6c4090",
+    "retail/inventory_retail_report.json": "fe3322d16713e6cd80bbabe3365ba2ebb2118e53c318483c684f76db7ca253d3",
+    "retail/orders_retail.csv": "cd07e2571c6039dfb72490ab5da700f7d647a6c311560ded6a34573e4b584324",
+    "retail/orders_retail_report.json": "18a2a2cada8630bf2afb0ca5ed76e8f1fd51dd4657ccef031ac0cd2a4903d14d",
+    "retail/products_retail.csv": "87f0041194a86a3247ede04d009c992b6b09a17fc514cffa008dde332ef8d4a9",
+    "retail/products_retail_report.json": "c7ab465598f9397b64aa9430a1bab2bc5d0462c2a3afa6356d3a4ee2f30a720a",
+    "retail/stores_retail.csv": "e53a6736e11ae200bae9867695bfc8af096579787f4550b1a1bb39de03e13337",
+    "retail/stores_retail_report.json": "06bf5aa775011f60806de1c636c31403db927dbf014a31841ab95cb917d86676"
+  }
+}
