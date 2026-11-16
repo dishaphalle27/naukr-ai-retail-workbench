@@ -5,20 +5,27 @@ CHAT IN THE TERMINAL
     python -m app.chat.cli data/retail --ask "Revenue by category"
     python -m app.chat.cli data/retail --trace SESSION_ID  show a saved conversation
 
+    python -m app.chat.cli data/retail --verify SESSION_ID   re-run a saved session and check every number reproduces
+
 Inside the chat:  :plan  :evidence  :trace  :new  :quit
 """
 import json
 import sys
 
+from app.chat.answers import format_receipt
 from app.chat.factory import build_assistant
 from app.chat.catalog import Catalog
 from app.chat.store import ChatStore
+from app.chat.verify import verify_session
 from app.errors import DataLoadError
 
 
 def show(reply):
     if reply["status"] == "ok":
         print(reply["answer"]["text"])
+        receipt = format_receipt(reply)
+        if receipt:
+            print(receipt)
     elif reply["status"] == "clarify":
         print("? " + reply["clarification"]["text"])
     else:
@@ -31,6 +38,10 @@ def arg(name, default=None):
 
 
 def main():
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")      # rupee signs print on any Windows console
+    except (AttributeError, ValueError):
+        pass
     positional = [a for i, a in enumerate(sys.argv[1:], 1) if not a.startswith("--") and not sys.argv[i - 1].startswith("--")]
     if not positional:
         print(__doc__)
@@ -41,6 +52,13 @@ def main():
         print(json.dumps(err.to_dict(), indent=2))
         return 2
     store = ChatStore(arg("--db", "data/chat/chat.db"))
+    if "--verify" in sys.argv:
+        results = verify_session(catalog, store, arg("--verify"))
+        for r in results:
+            print(f"turn {r['turn']}: {r['verdict'].upper():<10} {r['question'][:60]!r}  {r['detail']}")
+        bad = [r for r in results if r["verdict"] == "changed"]
+        print("\nEvery computed answer reproduced exactly." if not bad else f"\n{len(bad)} answer(s) no longer reproduce.")
+        return 2 if bad else 0
     if "--trace" in sys.argv:
         print(json.dumps(store.trace(arg("--trace")), indent=2))
         return 0

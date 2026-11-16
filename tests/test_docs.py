@@ -12,7 +12,7 @@ def code_blocks():
 
 
 def test_every_module_command_in_the_readme_exists():
-    modules = set(re.findall(r"python -m (app(?:\.\w+)+)", code_blocks()))
+    modules = set(re.findall(r"python -m (app(?:\.\w+)+)", README))      # code blocks AND tables
     assert len(modules) >= 8
     for m in modules:
         assert importlib.util.find_spec(m) is not None, f"README mentions {m} but it does not exist"
@@ -28,10 +28,19 @@ def test_every_script_and_data_path_in_the_readme_exists():
 
 
 def test_readme_covers_what_the_assessment_asks_for():
-    needed = ["Quick start", "Architecture", "AI-versus-code", "Data that leaves the machine", "Security", "trade-offs",
-              "Known limitations", "gemini-3.5-flash", "Track: AI Engineering", "python -m app.evaluate"]
+    needed = ["Quick start", "What leaves your machine", "When the AI is down", "What this system intentionally does not do",
+              "AI versus code", "Security", "Trade-offs", "Known limitations", "gemini-3.5-flash", "Track: AI Engineering",
+              "python -m app.evaluate", "python -m app.scorecard", "--verify", "Requirement map", "Sample data and schema"]
     for text in needed:
         assert text.lower() in README.lower(), f"README is missing: {text}"
+
+
+def test_readme_numbers_match_the_code():
+    import json
+    cases = json.loads((ROOT / "eval" / "cases_edge.json").read_text())
+    assert f"{len(cases)} awkward cases" in README
+    gold = json.loads((ROOT / "cases.json").read_text())
+    assert f"{len(gold[0]['questions'])} of {len(gold[0]['questions'])} gold questions" in README
 
 
 def test_env_example_has_no_real_secret_and_gitignore_protects_env():

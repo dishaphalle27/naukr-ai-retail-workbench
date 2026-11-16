@@ -242,6 +242,8 @@ def _run_valid_case(spec, artifacts_root, settings, rules_only):
         except Exception as exc:
             errors.append(error_dict("CLEANING_FAILED", f"{type(exc).__name__}: {exc}"[:200], dataset=name))
             continue
+        (case_dir / "original").mkdir(exist_ok=True)
+        shutil.copyfile(path, case_dir / "original" / f"{name}.csv")        # byte-for-byte original artifact
         ds_info[name], before[name], after[name] = r["dataset"], r["profile_before"], r["profile_after"]
         validation[name] = r["validation"]
         issues += r["issues"]

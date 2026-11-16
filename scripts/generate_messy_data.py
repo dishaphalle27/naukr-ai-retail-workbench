@@ -215,9 +215,12 @@ def make_orders(products, stores, customers):
             if random.random() < 0.5 else m["returned"]
         messy.append(m)
 
-    # quantity written in words
+    # quantity written in words: the CORRECT number, spelled out ("two" for 2), like a real person would.
+    # (The random.choice below is kept only so every other random draw stays exactly where it was.)
+    WORDS = {1: "one", 2: "two", 3: "three"}
     for idx in random.sample(range(len(messy)), 4):
-        messy[idx]["quantity"] = random.choice(["two", "one", "three"])
+        random.choice(["two", "one", "three"])
+        messy[idx]["quantity"] = WORDS[int(messy[idx]["quantity"])]
         plant("quantity_as_word")
     # missing customer
     for idx in random.sample(range(len(messy)), 10):

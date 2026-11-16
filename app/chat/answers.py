@@ -117,3 +117,26 @@ def build_answer(plan, result, evidence, meta, warnings):
                  f"in {evidence['dataset']} ({evidence['version']}).")
     text = "\n".join([headline] + lines + extra)
     return {"text": text, "headline": headline, "columns": cols, "rows": rows, "assumptions": meta.get("notes", [])}
+
+
+def format_receipt(reply):
+    """A compact, plain-ASCII 'receipt' for an answer: where the numbers came from. Built only from evidence."""
+    e = reply.get("evidence")
+    if not e:
+        return ""
+    trace = reply.get("trace") or {}
+    ops = " > ".join(o["op"] for o in e.get("operations", [])) or "-"
+    filters = "; ".join(filter_text(f) for f in (reply.get("plan") or {}).get("filters", [])) or "none"
+    joins = " | ".join(f"{j['table']} {fmt_value(j['rows_before'])}->{fmt_value(j['rows_after'])}"
+                       + (f" ({j['unmatched_rows']} unmatched)" if j.get("unmatched_rows") else "")
+                       + (f" ({j['blank_key_rows']} blank keys)" if j.get("blank_key_rows") else "")
+                       for j in e.get("joins", [])) or "none"
+    rows = [("data", f"{e['version']}   {fmt_value(e['rows_in_dataset'])} rows -> {fmt_value(e['rows_after_filters'])} after filters"),
+            ("columns", ", ".join(e.get("columns_used", [])) or "-"),
+            ("filters", filters), ("joins", joins), ("steps", ops),
+            ("checked", "plan passed the validator; numbers computed by pandas, not by the model"),
+            ("planner", trace.get("planner", "rules") + (f" ({trace['model']})" if trace.get("model") else ""))]
+    for n in (e.get("notes") or [])[:2]:
+        rows.append(("note", n[:110]))
+    line = "+-- RECEIPT " + "-" * 62
+    return "\n".join([line] + [f"| {k:<8}{v}" for k, v in rows] + ["+" + "-" * (len(line) - 1)])

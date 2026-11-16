@@ -1,57 +1,67 @@
 """
-PREPARE - one command that gets raw CSVs ready for chat.
+PREPARE - one command that gets raw CSVs ready for chat, and saves the work as a RUN.
 
     python -m app.prepare data/sample
 
-It runs, in order:   clean (profile, plan, fix, validate)  ->  retail normalization
-and writes   data/cleaned/*_clean.csv   and   data/retail/*_retail.csv   (plus JSON reports).
-Then start the chat with:   python -m app.chat.cli data/retail
+  1. fingerprints the input files and creates (or reuses) a run:  data/runs/<run-id>/
+        original/  cleaned/  retail/  run.json (status, metadata, hashes)
+  2. copies the finished files to  data/cleaned  and  data/retail  so the chat can read them
+  3. prints a short summary
 
-Exit code 0 = every file cleaned and passed validation. 2 = something needs attention.
+Same input twice = the existing run is reused (nothing is recomputed). Use --force to rebuild.
+Exit code 0 = succeeded. 2 = partial / failed (see the lines above).
 """
 import argparse
+import shutil
 import sys
 from pathlib import Path
 
-from app.cleaning.pipeline import clean_folder, summarize
-from app.retail.normalize import normalize_folder
+from app.errors import DataLoadError
+from app.runs import create_run
 
 
-def prepare(folder, clean_dir="data/cleaned", retail_dir="data/retail"):
-    cleaned = clean_folder(folder, clean_dir)
-    normalized = normalize_folder(clean_dir, retail_dir)
-    ok = bool(cleaned) and all(r.get("status") != "error" and r["validation"]["passed"] for r in cleaned) \
-        and all(r.get("status") != "error" and r["validation"]["passed"] for r in normalized)
-    return {"cleaned": cleaned, "normalized": normalized, "ok": ok}
+def _publish(run_path, name, target):
+    target = Path(target)
+    if target.exists():
+        shutil.rmtree(target)
+    shutil.copytree(Path(run_path) / name, target)
+
+
+def prepare(folder, clean_dir="data/cleaned", retail_dir="data/retail", runs_dir="data/runs", force=False):
+    run = create_run(folder, runs_dir, force=force)
+    if run["status"] in ("succeeded", "partial"):
+        _publish(run["path"], "cleaned", clean_dir)
+        _publish(run["path"], "retail", retail_dir)
+    return run
 
 
 def main(argv=None):
-    ap = argparse.ArgumentParser(prog="python -m app.prepare", description="Clean and normalize every CSV in a folder.")
+    ap = argparse.ArgumentParser(prog="python -m app.prepare", description="Clean and normalize every CSV in a folder, as a saved run.")
     ap.add_argument("folder", help="folder with raw .csv files")
     ap.add_argument("--clean-dir", default="data/cleaned")
     ap.add_argument("--retail-dir", default="data/retail")
+    ap.add_argument("--runs-dir", default="data/runs")
+    ap.add_argument("--force", action="store_true", help="rebuild even if this exact input was already prepared")
     args = ap.parse_args(argv)
-    if not Path(args.folder).is_dir():
-        print(f"Folder not found: {args.folder}")
+    try:
+        run = prepare(args.folder, args.clean_dir, args.retail_dir, args.runs_dir, args.force)
+    except DataLoadError as err:
+        print(err.message)
         return 2
-    result = prepare(args.folder, args.clean_dir, args.retail_dir)
-    if not result["cleaned"]:
-        print(f"No .csv files found in {args.folder}")
-        return 2
-    print("CLEANING")
-    for r in result["cleaned"]:
-        print("  " + summarize(r))
-    print("RETAIL NORMALIZATION")
-    for r in result["normalized"]:
-        if r.get("status") == "error":
-            print(f"  {r['dataset']['name']:<10} ERROR {r['error']['code']}")
-            continue
-        review = [d for d in r["decisions"] if d["status"] == "needs_review"]
-        applied = [d for d in r["decisions"] if d["status"] == "applied"]
-        print(f"  {r['dataset']['name']:<10} {len(applied)} applied, {len(review)} needs_review | {r['dataset']['version']}")
-    print(f"\nAll checks passed. Start the chat with:  python -m app.chat.cli {args.retail_dir}" if result["ok"]
-          else "\nSome files need attention (see lines above).")
-    return 0 if result["ok"] else 2
+    print(f"RUN {run['run_id']}  status: {run['status']}  " + ("(same input as before: reused, nothing recomputed)" if run["reused"] else "(new)"))
+    print(f"    {run['path']}/  original/  cleaned/  retail/  run.json")
+    for name, d in sorted(run["datasets"].items()):
+        steps = ", ".join(f"{n} {s}" for s, n in sorted(d["steps"].items()))
+        mark = "PASS" if d["validation_passed"] and d["retail_validation_passed"] else "FAIL"
+        print(f"  {name:<10} rows {d['rows_before']:>5} -> {d['rows_after']:>5} | {steps or 'no steps'} | "
+              f"{d['needs_review_decisions']} alias(es) need review | validation {mark} | {d['retail_version']}")
+    for e in run["errors"]:
+        print(f"  ERROR {e.get('dataset', '')}: [{e['code']}] {e['message']}")
+    if run["status"] == "succeeded":
+        print(f"\nAll checks passed. Start the chat with:  python -m app.chat.cli {args.retail_dir}")
+        return 0
+    print("\nThis run is not fully clean (see lines above). Files that worked are still available to chat.")
+    return 2
 
 
 if __name__ == "__main__":
