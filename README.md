@@ -6,7 +6,7 @@ Every number in every answer comes from a calculation that actually ran, and eve
 The one rule: **the model may plan. The application validates, executes and verifies.**
 A persuasive answer with no computation behind it is a wrong answer.
 
-Walkthrough video: `<paste the link here before submitting>`
+Walkthrough video: https://drive.google.com/file/d/1vNWuiH5N8pwwjP1fx1_vmaYVUfvgw0tI/view?usp=sharing
 
 ---
 
